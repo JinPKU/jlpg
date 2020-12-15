@@ -6,17 +6,13 @@ Implemented by \
 **Ting Lin**, PKU
 
 
+`\include` contains header file of our jlpg package, including
+  - `jlpg.hpp` the wrapper of our all header file.
+  - `funcpairs.hpp` define useful function pairs like `LS`, `L1_NORM`, `L2_NORM`
+  - `problem.hpp` the construction and basic function of the objective.
+  - `solver.hpp` the solver of our proximal gradient method
 
-
-The input might be
-```
-Problem<Vec> prob;
-prob.f = f;
-prob.gradf = gradf;
-prob.h = h;
-prob.proxh = h;
-prob.mu = mu;
-prob.x0 = x0;
-prob.setup();
-prob.solve();
-```
+Things todo:
+1. Armijo and Nonmonotone BB search 
+2. various gradpair and proxpair
+3. examples
