@@ -9,14 +9,24 @@
 
 
 template <typename T>
-T pgm(Problem<T> p, T x,int maxiter, Real tol){
+T pgm(Problem<T> p, T x,int maxiter, Real tol, Real alpha){
+#if VERBOSED
+    cout << "Proximal Gradient Method with Constant Stepsize " <<  alpha << endl;
+#endif
     Real f_prev = p.f(x);
-    for(int iter = 0; iter < maxiter; iter ++){
-        Real alpha = 0.01;
+    int iter;
+    for( iter = 0; iter < maxiter; iter ++){
         x = p.proxh(x - alpha*p.gradf(x), alpha*p.mu);
         Real f_cur = p.f(x);
+#if VERBOSED
+    cout << "In iteration " << iter << ", objective function value = "<< f_cur << endl;
+#endif
         if(abs(f_cur - f_prev) < tol){ break;} 
+        f_prev = f_cur;
     }
+#if VERBOSED
+    cout << "Problem Solved within " << iter+1 << " Iteration(s)." << endl;
+#endif
     return x;
 };
 
