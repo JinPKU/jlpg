@@ -1,4 +1,11 @@
 
-
+# todo : change the make file
 % : %.cpp
-	g++  -O3 -march=native -std=c++11  $< ./src/problem.cpp  ./src/funcpairs.cpp -o $@  -Iinclude
+	@g++  -O3 -march=native -std=c++11  $< -o $@  -Iinclude
+
+
+
+
+.PHONY: clean
+clean:
+	@-rm ./test1
