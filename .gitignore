@@ -3,7 +3,8 @@
 !/examples/**/
 !/include/
 !/include/**/
-
+!/src/
+!/src/**/
 !.gitignore
 !./makefile
 !*.hpp
