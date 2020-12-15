@@ -21,6 +21,5 @@ int main(){
     x << -2,0.5;
     cout << p.proxh(x,1)<<endl;
     cout << p.value(x) << endl;
-    //x = pgm<Vec>(10,x,StepsizeScheduler<Vec>());
-
+    cout << pgm(p, x, 1000,0);
 }

@@ -1,3 +1,13 @@
 *
-*.o
+!/examples/
+!/examples/**/
+!/include/
+!/include/**/
+!/lib/
+!/lib/**/
+
 !.gitignore
+!./makefile
+!*.hpp
+!*.cpp
+!.*md
