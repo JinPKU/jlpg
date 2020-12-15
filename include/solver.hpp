@@ -13,11 +13,11 @@ T pgm(Problem<T> p, T x,int maxiter, Real tol, Real alpha){
 #if VERBOSED
     cout << "Proximal Gradient Method with Constant Stepsize " <<  alpha << endl;
 #endif
-    Real f_prev = p.f(x);
+    Real f_prev = p.value(x);
     int iter;
     for( iter = 0; iter < maxiter; iter ++){
         x = p.proxh(x - alpha*p.gradf(x), alpha*p.mu);
-        Real f_cur = p.f(x);
+        Real f_cur = p.value(x);
 #if VERBOSED
     cout << "In iteration " << iter << ", objective function value = "<< f_cur << endl;
 #endif
