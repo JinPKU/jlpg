@@ -10,7 +10,7 @@ Implemented by \
 
 The input might be
 ```
-Problem prob;
+Problem<Vec> prob;
 prob.f = f;
 prob.gradf = gradf;
 prob.h = h;

@@ -9,11 +9,8 @@ Vec gradf(Vec x){return x;}
 
 
 int main(){
-    Problem<Vec>  p;//(f,gradf,f,gradf);
+    Problem<Vec>  p(L1_NORM);
     Vec x(3);
-    p.f = f;
-    p.h = f;
-    p.mu = 1;
     x << 2,3,4;
-    cout << p.value(x) << endl;
+    cout << p.proxh(x,1)<<endl;
 }
