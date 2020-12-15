@@ -10,7 +10,7 @@
 
 template <typename T>
 T pgm(Problem<T> p, T x,int maxiter, Real tol){
-    Real f_prev = 1e8;
+    Real f_prev = p.f(x);
     for(int iter = 0; iter < maxiter; iter ++){
         Real alpha = 0.01;
         x = p.proxh(x - alpha*p.gradf(x), alpha*p.mu);
