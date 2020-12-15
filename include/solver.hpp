@@ -20,4 +20,16 @@ T pgm(Problem<T> p, T x,int maxiter, Real tol){
     return x;
 };
 
+template <typename T>
+T pgm_armijo(Problem<T>p, T x, int maxiter, Real tol, Real rho, int bt_time){
+// todo
+
+    return x;
+}
+
+template <typename T>
+T pgm_nbb(Problem<T>p, T x, int maxiter, Real tol){
+
+    return x;
+}
 #endif
