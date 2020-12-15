@@ -10,4 +10,4 @@
 !./makefile
 !*.hpp
 !*.cpp
-!.*md
+!*.md
