@@ -21,5 +21,5 @@ int main(){
     x << -2,0.5;
     cout << p.proxh(x,1)<<endl;
     cout << p.value(x) << endl;
-    cout << pgm(p, x, 1000,1e-8,1e-2);
+    cout << pgm_armijo(p, x, 1000,1e-8,1e-2);
 }
