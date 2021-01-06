@@ -271,6 +271,15 @@ bottom=2.5cm]{geometry}
     \begin{displaymath}
       \prox_{\mu h}(x) = U D V^T.
     \end{displaymath}
+  
+    \item {Elastic-net:} $h(x) = \norm{x}_1 + \frac{\lambda}{2} 
+    \norm{x}_2^2$, where $x \in \mr^n$. The proximal operator of $\mu 
+    h(x)$ is given by
+    \begin{displaymath}
+      (\prox_{\mu h}(x))_i =  \frac{\sign(y_i) \; \max\{ |y_i| - \mu, 
+      0 
+        \}}{1 + \lambda \mu}.
+    \end{displaymath}
     
     \item {Sum of logarithms:} $h(x) = -\sum_{i=1}^{n} \log(x_i)$, 
     where $x \in \mr^n$. The proximal operator of $\mu h(x)$ 
