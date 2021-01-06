@@ -9,7 +9,7 @@
 
 struct Options{
 
-	bool BBMethodEnabled, BBMethodEnabled;
+	bool LineSearchEnabled, BBMethodEnabled;
 	int maxiter;
 	Real ftol, gtol;
 	Real alpha;
