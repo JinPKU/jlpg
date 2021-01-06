@@ -9,6 +9,11 @@
 
 template <typename T>
 class Problem{
+    /*  
+        The problem is set up as f+mu*h, where f is a grad pair and h is a prox pair.
+
+    */
+
     public:
     Problem(){}
     Problem(function<Real(T)> f, function<T(T)> gradf, function<Real(T)> h, function<T(T,Real)> proxh);
@@ -22,7 +27,7 @@ class Problem{
     function<Real(T)> h;
     function<T(T,Real)> proxh;
     Real mu;
-    Real value(T x);
+    Real value(T x);  // return the value of f(x)+mu*h(x)
 
 };
 
