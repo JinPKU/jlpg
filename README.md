@@ -13,6 +13,5 @@ Implemented by \
   - `solver.hpp` the solver of our proximal gradient method
 
 Things todo:
-1. Armijo and Nonmonotone BB search 
-2. various gradpair and proxpair
-3. examples
+1. various gradpair and proxpair
+2. examples

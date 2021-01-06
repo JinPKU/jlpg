@@ -96,5 +96,5 @@ prox_pair<Vec> L1_NORM(L1_NORM_H,L1_NORM_PROXH);
 
 
 
-#endif    // FUNCPAIRS_HPP
+#endif    /* __JLPG_HPP__ */
 

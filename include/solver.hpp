@@ -8,12 +8,14 @@
 #include <cmath>
 
 struct Options{
-	bool ls, bb;
+
+	bool BBMethodEnabled, BBMethodEnabled;
 	int maxiter;
 	Real ftol, gtol;
 	Real alpha;
 
-	Options(bool ls_, bool bb_, int maxiter_, Real ftol_, Real gtol_, Real alpha_): ls(ls_), bb(bb_), maxiter(maxiter_), ftol(ftol_), gtol(gtol_), alpha(alpha_) {};
+	Options(bool LineSearchEnabled, bool BBMethodEnabled, int maxiter, Real ftol, Real gtol, Real alpha): 
+	LineSearchEnabled(LineSearchEnabled), BBMethodEnabled(BBMethodEnabled), maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha) {};
 };
 
 template <typename T>
@@ -40,7 +42,7 @@ T pgm(Problem<T> p, T x, Options opts){
 		x_prev = x;
 
         x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
-		if (opts.ls) {
+		if (opts.BBMethodEnabled) {
 			nls = 0;
 			while (true) {
 				tmp = p.f(x);
@@ -65,7 +67,7 @@ T pgm(Problem<T> p, T x, Options opts){
 		g_cur = p.gradf(x);
 		nrmG = (x - p.proxh(x - g_cur, p.mu)).norm();
 
-		if (opts.bb && opts.ls) {
+		if (opts.BBMethodEnabled && opts.BBMethodEnabled) {
 			dx = x - x_prev;
 			dg = g_cur - g_prev;
 			dxg = abs(dx.dot(dg));
