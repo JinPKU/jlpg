@@ -50,6 +50,8 @@ bottom=2.5cm]{geometry}
 \newcommand{\sign}{\mathrm{sign}}
 \newcommand{\proj}{\mathrm{Proj}}
 \newcommand{\mi}{\mathbf{1}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\rank}{\mathrm{rank}}
 
 %\graphicspath{{../figures/}}
 
@@ -61,208 +63,299 @@ bottom=2.5cm]{geometry}
 \date{\today}
 
 \begin{document}
-\maketitle
-\tableofcontents
-
-\section{Introduction}
-\label{sec:intro}
-In this project, we consider the following composite optimization 
-problem
-\begin{equation}
-  \min\limits_{x} F(x) = f(x) + h(x),
-\end{equation}
-where $f(x)$ is differentiable and $h(x)$ is a function whose 
-proximal operator is easily available.
-The proximal operator of $h(x)$ is defined as
-\begin{displaymath}
-  \prox_h(x) = \mathop{\arg\min}\limits_{u} h(u) + \frac{1}{2} 
-  \norm{u - x}^2.
-\end{displaymath}
-Starting from a suitable initial point $x^0$, the proximal gradient 
-method is performed as
-\begin{displaymath}
-  x^{k+1} = \prox_{t_k h} (x^k - t_k \nabla f(x^k)),
-\end{displaymath}
-where $t_k$ is a chosen step size.
-
-
-% description of algorithms & interpretation of implementation?
-\section{Algorithms}
-\label{sec:alg}
-
-\subsection{Strategies for choosing the step size}
-
-
-
-
-
-
-\section{Several scenarios}
-\label{sec:cal}
-
-\subsection{Scenarios of $f(x)$}
-\label{sec:cal_f}
-In this part, we list several typical scenarios of $f(x)$ that are 
-supported in our codes. We give their gradient explicitly.
-
-\begin{itemize}
-  \item {Least squares in vector form:} $f(x) = \frac{1}{2} 
-  \norm{Ax - b}_2^2$, where $A \in \mr^{m \times n}$, $x \in \mr^n$, 
-  $b 
-  \in \mr^m$. The gradient of $f(x)$ is given by %\footnote{In this 
-  %report, we write the gradient in the same shape as $x$.}
-  \begin{displaymath}
-    \nabla f(x) = A^T (A x - b).
-  \end{displaymath}
+  \maketitle
+  \tableofcontents
   
-  \item {Least squares in matrix form:} $f(x) = \frac{1}{2} 
-  \norm{Ax - b}_F^2$, where $A \in \mr^{m \times n}$, $x \in \mr^{n 
-    \times l}$, $b \in \mr^{m \times l}$. The gradient of $f(x)$ is 
-  given 
-  by
+  \section{Introduction}
+  \label{sec:intro}
+  In this project, we consider the following composite optimization 
+  problem
+  \begin{equation}
+    \min\limits_{x} F(x) = f(x) + h(x),
+  \end{equation}
+  where $f(x)$ is differentiable and $h(x)$ is a function whose 
+  proximal operator is easily available.
+  The proximal operator of $h(x)$ is defined as
   \begin{displaymath}
-    \nabla f(x) = A^T  (A x - b).
+    \prox_h(x) = \mathop{\arg\min}\limits_{u} h(u) + \frac{1}{2} 
+    \norm{u - x}^2.
   \end{displaymath}
-  
-  \item {Logistic regression:} 
+  Starting from a suitable initial point $x^0$, the proximal gradient 
+  method is performed as
   \begin{displaymath}
-    f(x) = \frac{1}{m} \sum_{i = 1}^{m} \log(1 + \exp(- b_i a_i^T x)),
+    x^{k+1} = \prox_{t_k h} (x^k - t_k \nabla f(x^k)),
   \end{displaymath}
-  where $x \in \mr^n$, $A = (a_1, \ldots, a_m) \in \mr^{n \times m}$, 
-  $a_i = (a_{1,i}, \ldots, a_{n,i})^T \in \mr^n$,
-  $b = (b_1, \ldots, b_m)^T \in \mr^m$. The gradient of $f(x)$ is 
-  given 
-  by
-  \begin{displaymath}
-    \nabla f(x) = - \frac{1}{m} \sum_{i = 1}^{m} \frac{b_i 
-      a_i}{\exp(b_i a_i^T x) + 1}.
-  \end{displaymath}
-\end{itemize}
-
-
-
-\subsection{Scenarios of $h(x)$}
-\label{sec:cal_h}
-In this part, we list several typical scenarios of $h(x)$ that are 
-supported in our codes. We give the proximal operator of $\mu h(x)$ 
-explicitly.
-
-\begin{itemize}
-  \item {Vector $\ell_0$-norm:} $h(x) = \norm{x}_0 = \# \{i:x_i 
-  \ne 0\}$, where $x \in \mr^n$. The proximal operator of $\mu h(x)$ 
-  is 
-  given by
-  \begin{displaymath}
-    \prox_{\mu h}(x) = \mh_{\mu}(x_1) \times \ldots \times 
-    \mh_{\mu}(x_n),
-  \end{displaymath}
-  where $\mh_{\mu}(s)$ is given by
-  \begin{displaymath}
-    \mh_{\mu}(s) = 
-    \begin{cases}
-      \{0\},    & |s| < \sqrt{2\mu}, \\
-      \{0, s\}, & |s| = \sqrt{2\mu}, \\
-      \{s\},    & |s| > \sqrt{2\mu}.
-    \end{cases}
-  \end{displaymath}
-  
-  \item {Vector $\ell_1$-norm:} $h(x) = \norm{x}_1 = 
-  \sum_{i=1}^{n} |x_i|$, where $x \in \mr^n$. The proximal operator 
-  of 
-  $\mu h(x)$ is given by
-  \begin{displaymath}
-    \prox_{\mu h}(x) = (\mh_{\mu}(x_1), \ldots, \mh_{\mu}(x_n))^T,
-  \end{displaymath}
-  where $\mh_{\mu}(s)$ is given by
-  \begin{displaymath}
-    \mh_{\mu}(s) = \sign(s) \max\{ |s| - \mu, 0 \}.
-  \end{displaymath}
-  
-  \item {Vector $\ell_2$-norm:} $h(x) = \norm{x}_2 = 
-  \left( \sum_{i=1}^{n} |x_i|^2 \right)^{\frac{1}{2}}$, where $x \in 
-  \mr^n$. The proximal operator of $\mu h(x)$ is given by
-  \begin{displaymath}
-    \prox_{\mu h}(x) = 
-    \begin{cases}
-      \frac{\max\{ \norm{x}_2 - \mu, 0 \}}{\norm{x}_2} x, & x \ne 0, 
-      \\
-      0, & x = 0.
-    \end{cases}
-  \end{displaymath}
+  where $t_k$ is a chosen step size.
   
   
-  \item {Vector $\ell_\infty$-norm:} $h(x) = \norm{x}_\infty = 
-  \max\{ |x_i|: i = 1, 2, \ldots, n \}$, where $x \in 
-  \mr^n$. By Moreau's decomposition, the proximal operator of $\mu 
-  h(x)$ is given by
-  \begin{displaymath}
-    \begin{split}
-      \prox_{\mu h}(x) & = x - \mu \; \prox_{\mu^{-1} h^\star} \left( 
-      \frac{x}{\mu} \right) \\
-      & = x - \mu \; \proj_{B_{\norm{\cdot}_1}(1)} \left( 
-      \frac{x}{\mu} \right),
-    \end{split}
-  \end{displaymath}
-  where $h^\star(y) = \mi_{B_{\norm{\cdot}_1}(1)}(y)$, $\mi_C(y)$ is 
-  the indicator function defined by
-  \begin{displaymath}
-    \mi_C(y) = 
-    \begin{cases}
-      0, & y \in C, \\
-      +\infty, & y \notin C,
-    \end{cases}
-  \end{displaymath}
-  $B_{\norm{\cdot}}(r)$ is the norm ball defined by
-  \begin{displaymath}
-    B_{\norm{\cdot}}(r) = \left\{ y: \norm{y} \le r \right\},
-  \end{displaymath}
-  $\proj_C(x)$ is the projection operator defined by
-  \begin{displaymath}
-    \proj_C(x) = \mathop{\arg\min}\limits_{u \in C} \norm{u - x}_2.
-  \end{displaymath}
+  % description of algorithms & interpretation of implementation?
+  \section{Algorithms}
+  \label{sec:alg}
+  
+  \subsection{Strategies for choosing the step size}
   
   
-  \item {Matrix $\ell_{1,2}$-norm:} $$h(x) = \norm{x}_{1,2} = 
-  \sum_{i = 1}^{n} \norm{x(i,1:l)}_2, $$
-  where $x \in \mr^{n \times l}$. The proximal operator of $\mu h(x)$ 
-  is given by
-  \begin{displaymath}
-    (\prox_{\mu h}(x))_{i,j} = 
-    \begin{cases}
-      x_{i,j} \max\left\{ 1 - \frac{\mu}{\norm{x(i,1:l)}_2}, 0 
-      \right\}, & \norm{x(i,1:l)}_2 > 0, \\
-      0, & \norm{x(i,1:l)}_2 = 0.
-    \end{cases}
-  \end{displaymath}
   
   
-  %\item {Matrix $\ell_{2,1}$-norm:} $$h(x) = \norm{x}_{2,1} = 
-  %  \left( \sum_{i = 1}^{n} \norm{x(i,1:l)}_1^2 
-  %\right)^{\frac{1}{2}}, 
-  %  $$
-  %  where $x \in \mr^{n \times l}$. The proximal operator of $\mu 
-  %h(x)$ 
-  %  is given by
-\end{itemize}
-
-
-
-
-
-
-\section{Numerical experiments}
-\label{sec:num}
-
-
-
-
-%\bibliographystyle{plain}
-%\bibliography{ref}
-
-
-%\appendix
-%\renewcommand{\appendixname}{Appendix~\Alph{section}}
-%
-%\newpage
+  
+  
+  \section{Several scenarios}
+  \label{sec:cal}
+  
+  \subsection{Scenarios of $f(x)$}
+  \label{sec:cal_f}
+  In this part, we list several typical scenarios of $f(x)$ that are 
+  supported in our codes. We give their gradient explicitly.
+  
+  \begin{itemize}
+    \item {Least squares in vector form:} $f(x) = \frac{1}{2} 
+    \norm{Ax - b}_2^2$, where $A \in \mr^{m \times n}$, $x \in 
+    \mr^n$, 
+    $b 
+    \in \mr^m$. The gradient of $f(x)$ is given by %\footnote{In this 
+    %report, we write the gradient in the same shape as $x$.}
+    \begin{displaymath}
+      \nabla f(x) = A^T (A x - b).
+    \end{displaymath}
+    
+    \item {Least squares in matrix form:} $f(x) = \frac{1}{2} 
+    \norm{Ax - b}_F^2$, where $A \in \mr^{m \times n}$, $x \in \mr^{n 
+      \times l}$, $b \in \mr^{m \times l}$. The gradient of $f(x)$ is 
+    given 
+    by
+    \begin{displaymath}
+      \nabla f(x) = A^T  (A x - b).
+    \end{displaymath}
+    
+    \item {Logistic regression:} 
+    \begin{displaymath}
+      f(x) = \frac{1}{m} \sum_{i = 1}^{m} \log(1 + \exp(- b_i a_i^T 
+      x)),
+    \end{displaymath}
+    where $x \in \mr^n$, $A = (a_1, \ldots, a_m) \in \mr^{n \times 
+    m}$, 
+    $a_i = (a_{1,i}, \ldots, a_{n,i})^T \in \mr^n$,
+    $b = (b_1, \ldots, b_m)^T \in \mr^m$. The gradient of $f(x)$ is 
+    given 
+    by
+    \begin{displaymath}
+      \nabla f(x) = - \frac{1}{m} \sum_{i = 1}^{m} \frac{b_i 
+        a_i}{\exp(b_i a_i^T x) + 1}.
+    \end{displaymath}
+  \end{itemize}
+  
+  
+  
+  \subsection{Scenarios of $h(x)$}
+  \label{sec:cal_h}
+  In this part, we list several typical scenarios of $h(x)$ that are 
+  supported in our codes. We give the proximal operator of $\mu h(x)$ 
+  explicitly.
+  
+  \begin{itemize}
+    \item {Vector $\ell_0$-norm:} $h(x) = \norm{x}_0 = \# \{i:x_i 
+    \ne 0\}$, where $x \in \mr^n$. The proximal operator of $\mu 
+    h(x)$ 
+    is 
+    given by
+    \begin{displaymath}
+      \prox_{\mu h}(x) = \mh_{\mu}(x_1) \times \ldots \times 
+      \mh_{\mu}(x_n),
+    \end{displaymath}
+    where $\mh_{\mu}(s)$ is given by
+    \begin{displaymath}
+      \mh_{\mu}(s) = 
+      \begin{cases}
+        \{0\},    & |s| < \sqrt{2\mu}, \\
+        \{0, s\}, & |s| = \sqrt{2\mu}, \\
+        \{s\},    & |s| > \sqrt{2\mu}.
+      \end{cases}
+    \end{displaymath}
+    
+    \item {Vector $\ell_1$-norm:} $h(x) = \norm{x}_1 = 
+    \sum_{i=1}^{n} |x_i|$, where $x \in \mr^n$. The proximal operator 
+    of 
+    $\mu h(x)$ is given by
+    \begin{displaymath}
+      \prox_{\mu h}(x) = (\mh_{\mu}(x_1), \ldots, \mh_{\mu}(x_n))^T,
+    \end{displaymath}
+    where $\mh_{\mu}(s)$ is given by
+    \begin{displaymath}
+      \mh_{\mu}(s) = \sign(s) \max\{ |s| - \mu, 0 \}.
+    \end{displaymath}
+    
+    \item {Vector $\ell_2$-norm:} $h(x) = \norm{x}_2 = 
+    \left( \sum_{i=1}^{n} |x_i|^2 \right)^{\frac{1}{2}}$, where $x 
+    \in 
+    \mr^n$. The proximal operator of $\mu h(x)$ is given by
+    \begin{displaymath}
+      \prox_{\mu h}(x) = 
+      \begin{cases}
+        \frac{\max\{ \norm{x}_2 - \mu, 0 \}}{\norm{x}_2} x, & x \ne 
+        0, 
+        \\
+        0, & x = 0.
+      \end{cases}
+    \end{displaymath}
+    
+    
+    \item {Vector $\ell_\infty$-norm:} $h(x) = \norm{x}_\infty = 
+    \max\{ |x_i|: i = 1, 2, \ldots, n \}$, where $x \in 
+    \mr^n$. By Moreau's decomposition, the proximal operator of $\mu 
+    h(x)$ is given by
+    \begin{displaymath}
+      \begin{split}
+        \prox_{\mu h}(x) & = x - \mu \; \prox_{\mu^{-1} h^\star} 
+        \left( 
+        \frac{x}{\mu} \right) \\
+        & = x - \mu \; \proj_{B_{\norm{\cdot}_1}(1)} \left( 
+        \frac{x}{\mu} \right),
+      \end{split}
+    \end{displaymath}
+    where $h^\star(y) = \mi_{B_{\norm{\cdot}_1}(1)}(y)$, $\mi_C(y)$ 
+    is 
+    the indicator function defined by
+    \begin{displaymath}
+      \mi_C(y) = 
+      \begin{cases}
+        0, & y \in C, \\
+        +\infty, & y \notin C,
+      \end{cases}
+    \end{displaymath}
+    $B_{\norm{\cdot}}(r)$ is the norm ball defined by
+    \begin{displaymath}
+      B_{\norm{\cdot}}(r) = \left\{ y: \norm{y} \le r \right\},
+    \end{displaymath}
+    $\proj_C(x)$ is the projection operator defined by
+    \begin{displaymath}
+      \proj_C(x) = \mathop{\arg\min}\limits_{u \in C} \norm{u - x}_2.
+    \end{displaymath}
+    
+    
+    \item {Matrix $\ell_{1,2}$-norm:} $$h(x) = \norm{x}_{1,2} = 
+    \sum_{i = 1}^{n} \norm{x(i,1:l)}_2, $$
+    where $x \in \mr^{n \times l}$. The proximal operator of $\mu 
+    h(x)$ 
+    is given by
+    \begin{displaymath}
+      (\prox_{\mu h}(x))_{i,j} = 
+      \begin{cases}
+        x_{i,j} \max\left\{ 1 - \frac{\mu}{\norm{x(i,1:l)}_2}, 0 
+        \right\}, & \norm{x(i,1:l)}_2 > 0, \\
+        0, & \norm{x(i,1:l)}_2 = 0.
+      \end{cases}
+    \end{displaymath}
+    
+    
+    %\item {Matrix $\ell_{2,1}$-norm:} $$h(x) = \norm{x}_{2,1} = 
+    %  \left( \sum_{i = 1}^{n} \norm{x(i,1:l)}_1^2 
+    %\right)^{\frac{1}{2}}, 
+    %  $$
+    %  where $x \in \mr^{n \times l}$. The proximal operator of $\mu 
+    %h(x)$ 
+    %  is given by
+    
+    \item {Nuclear norm:} $h(x) = \norm{x}_* = \sum_{i = 1}^{r} 
+    \sigma_i(x)$, where $x \in \mr^{m \times n}$, $\{ \sigma_i(x) 
+    \}_{i=1}^r$ are all the $r$ non-zero singular values of $x$. Let 
+    the SVD of $x$ be $x = U \Sigma V^T$, where $\Sigma = 
+    \diag_{m,n}\left\{ \sigma_1, \ldots, \sigma_r \right\}$ denotes 
+    the 
+    $m \times n$ matrix $\Sigma$ with $\Sigma_{i,i} = \sigma_i$ for 
+    $i 
+    = 1, 2, \ldots, r$ and other elements zero. Here $\sigma_1 \ge 
+    \sigma_2 \ge \ldots \ge \sigma_r$. Let $d_i = \max\{ 
+    \sigma_i - \mu, 0 \}$ and $D = \diag_{m,n}\left\{ d_1, \ldots, 
+    d_r 
+    \right\}$. The proximal operator of $\mu h(x)$ is given by
+    \begin{displaymath}
+      \prox_{\mu h}(x) = U D V^T.
+    \end{displaymath}
+    
+    \item {Sum of logarithms:} $h(x) = -\sum_{i=1}^{n} \log(x_i)$, 
+    where $x \in \mr^n$. The proximal operator of $\mu h(x)$ 
+    is given by
+    \begin{displaymath}
+      (\prox_{\mu h}(x))_i = \frac{x_i + \sqrt{x_i^2 + 4\mu}}{2}.
+    \end{displaymath}
+    
+    \item {Indicator of $\ell_0$-ball:} $h(x) = 
+    \mi_{B_{\norm{\cdot}_0}(R)}$, where $x \in \mr^n$ and $R$ is a 
+    positive integer. Let $\left\{ \sigma(1), \sigma(2), \ldots, 
+    \sigma(n) \right\}$ be a permutation of $\left\{  1, 2, \ldots, n 
+    \right\}$ such that 
+    \begin{displaymath}
+      |x_{\sigma(1)}| \ge |x_{\sigma(2)}| \ge \ldots \ge 
+      |x_{\sigma(n)}|.
+    \end{displaymath}
+    The proximal operator of $\mu h(x)$ is given by
+    \begin{displaymath}
+      (\prox_{\mu h}(x))_{\sigma(i)} = 
+      \begin{cases}
+        x_{\sigma(i)}, & i = 1, 2, \ldots, R, \\
+        0, & i = R + 1, R + 2, \ldots, 
+        n.
+      \end{cases}
+    \end{displaymath}
+    
+    \item {Indicator of $\ell_2$-ball:} $h(x) = 
+    \mi_{\{y\} + B_{\norm{\cdot}_2}(R)}$, where $x, y \in \mr^n$.
+    The proximal operator of $\mu h(x)$ is given by
+    \begin{displaymath}
+      \prox_{\mu h}(x) = 
+      \begin{cases}
+        x, & \norm{x - y}_2 \le R, \\
+        y + \frac{R}{\norm{x - y}_2}(x - y), & \norm{x - y}_2 > R.
+      \end{cases}
+    \end{displaymath}
+    
+    \item {Indicator of simple box:} $$h(x) = \mi_{[l_1,u_1] \times 
+      \ldots \times [l_n,u_n]}(x),$$
+    where $x \in \mr^n$. Here $l_i$ and $u_i$ are allowed to be 
+    $-\infty$ and $+\infty$, respectively. The proximal operator of 
+    $\mu h(x)$ is given by
+    \begin{displaymath}
+      (\prox_{\mu h}(x))_i = \min\{ u_i, \max\{l_i, x_i\} \}.
+    \end{displaymath}
+    
+    \item {Indicator of rank ball:} $h(x) = \mi_{\rank(\cdot) \le 
+    R}$, 
+    where $x \in \mr^{m \times n}$ and $R$ is a positive integer. Let 
+    the SVD of $x$ be $x = U \Sigma V^T$, where $\Sigma = 
+    \diag_{m,n}\left\{ \sigma_1, \ldots, \sigma_r \right\}$. Let 
+    \begin{displaymath}
+      d_i = 
+      \begin{cases}
+        \sigma_i, & i = 1, 2, \ldots, R, \\
+        0, & i = R+1, R+2, \ldots, r,
+      \end{cases}
+    \end{displaymath}
+    and $D = \diag_{m,n}\left\{ d_1, \ldots, d_r \right\}$.
+    The proximal operator of $\mu h(x)$ is given by
+    \begin{displaymath}
+      \prox_{\mu h}(x) = U D V^T.
+    \end{displaymath}
+    
+  \end{itemize}
+  
+  
+  
+  
+  
+  
+  \section{Numerical experiments}
+  \label{sec:num}
+  
+  
+  
+  
+  %\bibliographystyle{plain}
+  %\bibliography{ref}
+  
+  
+  %\appendix
+  %\renewcommand{\appendixname}{Appendix~\Alph{section}}
+  %
+  %\newpage
   
 \end{document}
