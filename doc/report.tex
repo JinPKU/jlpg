@@ -1,0 +1,202 @@
+%!TEX program = xelatex
+
+\documentclass[a4paper]{article}
+%\documentclass{amsart}
+\usepackage[breaklinks,linkcolor=black,citecolor=black,urlcolor=black]
+    {hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage[ruled]{algorithm2e}
+\usepackage{subfigure}
+
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{enumerate}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[a4paper,left=2.5cm, right=2.5cm, top=2.5cm, 
+bottom=2.5cm]{geometry}
+\usepackage{xeCJK}
+
+%\newfontfamily{\con}{Consolas} 
+
+%\lstset{language=Matlab}
+
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{lemma}{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{assumption}{Assumption}
+\newtheorem{proposition}{Proposition}
+\newtheorem{experiment}{Experiment}
+
+%\numberwithin{equation}{section}
+\newcommand{\ip}[2]{\left\langle{#1},{#2}\right\rangle} % inner-prod
+\newcommand{\mr}{\mathbb{R}}
+\newcommand{\mh}{\mathcal{H}}
+\newcommand{\prox}{\mathrm{prox}}
+\newcommand{\sign}{\mathrm{sign}}
+
+%\graphicspath{{../figures/}}
+
+
+
+%--------------------------------------------------------------------%
+\title{Software implementation for the proximal gradient methods}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+\label{sec:intro}
+In this project, we consider the following composite optimization 
+problem
+\begin{equation}
+  \min\limits_{x} F(x) = f(x) + h(x),
+\end{equation}
+where $f(x)$ is differentiable and $h(x)$ is a function whose 
+proximal operator is easily available.
+The proximal operator of $h(x)$ is defined as
+\begin{displaymath}
+  \prox_h(x) = \mathop{\arg\min}\limits_{u} h(u) + \frac{1}{2} 
+  \norm{u - x}^2.
+\end{displaymath}
+Starting from a suitable initial point $x^0$, the proximal gradient 
+method is performed as
+\begin{displaymath}
+  x^{k+1} = \prox_{t_k h} (x^k - t_k \nabla f(x^k)),
+\end{displaymath}
+where $t_k$ is a chosen step size.
+
+
+% description of algorithms & interpretation of implementation?
+\section{Algorithms}
+\label{sec:alg}
+
+\subsection{Strategies for choosing the step size}
+
+
+
+
+
+
+\section{Several scenarios}
+\label{sec:cal}
+
+\subsection{Scenarios of $f(x)$}
+\label{sec:cal_f}
+In this part, we list several typical scenarios of $f(x)$ that are 
+supported in our codes. We give their gradient explicitly.
+
+\paragraph{Least squares in vector form:} $f(x) = \frac{1}{2} 
+\norm{Ax - b}_2^2$, where $A \in \mr^{m \times n}$, $x \in \mr^n$, $b 
+\in \mr^m$. The gradient of $f(x)$ is given by %\footnote{In this 
+%report, we write the gradient in the same shape as $x$.}
+\begin{displaymath}
+  \nabla f(x) = A^T (A x - b).
+\end{displaymath}
+
+\paragraph{Least squares in matrix form:} $f(x) = \frac{1}{2} 
+\norm{Ax - b}_F^2$, where $A \in \mr^{m \times n}$, $x \in \mr^{n 
+\times l}$, $b \in \mr^{m \times l}$. The gradient of $f(x)$ is given 
+by
+\begin{displaymath}
+  \nabla f(x) = A^T  (A x - b).
+\end{displaymath}
+
+\paragraph{Logistic regression:} 
+\begin{displaymath}
+  f(x) = \frac{1}{m} \sum_{i = 1}^{m} \log(1 + \exp(- b_i a_i^T x)),
+\end{displaymath}
+where $x \in \mr^n$, $A = (a_1, \ldots, a_m) \in \mr^{n \times m}$, 
+$a_i = (a_{1,i}, \ldots, a_{n,i})^T \in \mr^n$,
+$b = (b_1, \ldots, b_m)^T \in \mr^m$. The gradient of $f(x)$ is given 
+by
+\begin{displaymath}
+  \nabla f(x) = - \frac{1}{m} \sum_{i = 1}^{m} \frac{b_i 
+  a_i}{\exp(b_i a_i^T x) + 1}.
+\end{displaymath}
+
+
+\subsection{Scenarios of $h(x)$}
+\label{sec:cal_h}
+In this part, we list several typical scenarios of $h(x)$ that are 
+supported in our codes. We give the proximal operator of $\mu h(x)$ 
+explicitly.
+
+\paragraph{Vector $\ell_0$-norm: } $h(x) = \norm{x}_0 = \# \{i:x_i 
+\ne 0\}$, where $x \in \mr^n$. The proximal operator of $\mu h(x)$ is 
+given by
+\begin{displaymath}
+  \prox_{\mu h}(x) = \mh_{\mu}(x_1) \times \ldots \times 
+  \mh_{\mu}(x_n),
+\end{displaymath}
+where $\mh_{\mu}(s)$ is given by
+\begin{displaymath}
+  \mh_{\mu}(s) = 
+  \begin{cases}
+    \{0\},    & |s| < \sqrt{2\mu}, \\
+    \{0, s\}, & |s| = \sqrt{2\mu}, \\
+    \{s\},    & |s| > \sqrt{2\mu}.
+  \end{cases}
+\end{displaymath}
+
+\paragraph{Vector $\ell_1$-norm:} $h(x) = \norm{x}_1 = 
+\sum_{i=1}^{n} |x_i|$, where $x \in \mr^n$. The proximal operator of 
+$\mu h(x)$ is given by
+\begin{displaymath}
+  \prox_{\mu h}(x) = (\mh_{\mu}(x_1), \ldots, \mh_{\mu}(x_n))^T,
+\end{displaymath}
+where $\mh_{\mu}(s)$ is given by
+\begin{displaymath}
+  \mh_{\mu}(s) = \sign(s) \max\{ |s| - \mu, 0 \}.
+\end{displaymath}
+
+\paragraph{Vector $\ell_2$-norm:} $h(x) = \norm{x}_2 = 
+\left( \sum_{i=1}^{n} |x_i|^2 \right)^{\frac{1}{2}}$, where $x \in 
+\mr^n$. The proximal operator of $\mu h(x)$ is given by
+\begin{displaymath}
+  \prox_{\mu h}(x) = 
+  \begin{cases}
+    \frac{\max\{ \norm{x}_2 - \mu, 0 \}}{\norm{x}_2} x, & x \ne 0, \\
+    0, & x = 0.
+  \end{cases}
+\end{displaymath}
+
+
+\paragraph{Vector $\ell_\infty$-norm:}
+
+
+
+
+\section{Numerical experiments}
+\label{sec:num}
+
+
+
+
+%\bibliographystyle{plain}
+%\bibliography{ref}
+
+
+%\appendix
+%\renewcommand{\appendixname}{Appendix~\Alph{section}}
+%
+%\newpage
+
+\end{document}
