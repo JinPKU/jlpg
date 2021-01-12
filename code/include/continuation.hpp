@@ -26,13 +26,14 @@ T cont_pgm(Problem<T> p, T x, ContOptions conopts, Outputs &conoutput) {
 	Options opts_tmp = conopts.opts;
 	opts_tmp.ftol = opts_tmp.ftol * conopts.ftol_init;
 	opts_tmp.gtol = opts_tmp.gtol * conopts.gtol_init;
-	Real mu_t = conopts.mu1;
-	Real mu = p.mu;
+	Real mu_tmp = conopts.mu1;
 	Real F_cur = p.value(x);
 	Real F_prev;
-	p.mu = mu_t;
+
+	Problem<T> p_tmp = p;
+	p_tmp.mu = mu_tmp;
 	Outputs output;
-	clock_t  Tstart, Tend;
+	clock_t Tstart, Tend;
 	Tstart = clock();
 
 	conoutput.Flag = false;
@@ -41,23 +42,24 @@ T cont_pgm(Problem<T> p, T x, ContOptions conopts, Outputs &conoutput) {
 	for ( iter_out = 0; iter_out < conopts.maxiter_out; ++iter_out ) {
 		F_prev = F_cur;
 
-		x = pgm(p, x, opts_tmp, output);
+		x = pgm(p_tmp, x, opts_tmp, output);
 		conoutput.iter += output.iter;
+		F_cur = p.value(x);
 		
 
-		if (mu_t == mu && (abs(F_cur - F_prev) < conopts.opts.ftol || output.nrmG < conopts.opts.gtol)) {
+		if (mu_tmp == p.mu && (abs(F_cur - F_prev) < conopts.opts.ftol || output.nrmG < conopts.opts.gtol)) {
 			conoutput.Flag = true;
 			break;
 		}
 
 		if (output.Flag) {
-			mu_t = max(mu_t * conopts.factor, mu);
+			mu_tmp = max(mu_tmp * conopts.factor, p.mu);
+			p_tmp.mu = mu_tmp;
 		}
 
 		opts_tmp.ftol = max(opts_tmp.ftol * conopts.etaf, conopts.opts.ftol);
 		opts_tmp.gtol = max(opts_tmp.gtol * conopts.etag, conopts.opts.gtol);
 	}
-	p.mu = mu;
 
 	Tend = clock();
 	Real during = (double)(Tend - Tstart)/CLOCKS_PER_SEC;
