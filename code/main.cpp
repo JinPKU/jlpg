@@ -18,7 +18,7 @@ int main(){
     // Vec b(2);
     // b<<1,2;
     Problem<Mat> p(LS(A,b),NO_PROX);
-    // p.mu = 1;
+    // cout << p.value(x) << endl;
     // Vec x(3);
     // x << -2,0.5,1;
     // cout << p.f(x) << endl;

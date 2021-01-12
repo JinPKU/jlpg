@@ -51,7 +51,7 @@ T pgm(Problem<T> p, T x, Options opts){
 			nls = 0;
 			while (true) {
 				tmp = p.f(x);
-				if (tmp <= f_prev + g_prev.dot(x - x_prev) + .5 / alpha * (x - x_prev).squaredNorm() || nls == 10) { break; }
+				if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm() || nls == 10) { break; }
 				
 				alpha = 0.5 * alpha; nls = nls + 1;
 				x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
@@ -75,7 +75,7 @@ T pgm(Problem<T> p, T x, Options opts){
 		if (opts.BBMethodEnabled && opts.BBMethodEnabled) {
 			dx = x - x_prev;
 			dg = g_cur - g_prev;
-			dxg = abs(dx.dot(dg));
+			dxg = abs(dx.array()*dg.array()).sum();
 
 			if (dxg > 0) {
 				if (iter & 1) {
