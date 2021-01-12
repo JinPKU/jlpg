@@ -60,6 +60,7 @@ class prox_pair{
     /* members */
     function<Real(T)> h;
     function<T(T,Real)> proxh;
+    prox_pair shift(T y);
 };
 
 
@@ -79,16 +80,30 @@ prox_pair<T>:: prox_pair(function<Real(T)> h, function<T(T, Real)> proxh){
     this->h = h; this->proxh = proxh;
 }
 
+template <typename T> Real h_shift(function<Real(T)> h, T x, T y){
+    return h(x-y);
+}
+template <typename T> T proxh_shift(function<T(T,Real)> proxh, T x, T y, Real t){
+    return y + proxh(x-y,t);
+}
+
+template<typename T>
+ prox_pair<T> prox_pair<T>::shift(T y){
+    return prox_pair<T> (bind(h_shift<T>, this->h, placeholders::_1, y), bind(proxh_shift<T>, this->proxh, placeholders::_1,y, placeholders::_2));
+}
 /*--------------------------------
         BUILT-IN IMPLEMENTATIONS
 ------------------------------- */
-// No grad pair
+
 
 
 // No prox pair
-Real NO_PROX_H(Mat x){return 0;}
-Mat NO_PROX_PROXH(Mat x, Real t){return x;}
-prox_pair<Mat> NO_PROX(NO_PROX_H,NO_PROX_PROXH);
+Real NO_PROX_H(Vec x){return 0;}
+Vec NO_PROX_PROXH(Vec x, Real t){return x;}
+prox_pair<Vec> NO_PROX(NO_PROX_H,NO_PROX_PROXH);
+Real NO_PROX_HM(Mat x){return 0;}
+Mat NO_PROX_PROXHM(Mat x, Real t){return x;}
+prox_pair<Mat> NO_PROX(NO_PROX_HM,NO_PROX_PROXHM);
 
 
 // vec LS

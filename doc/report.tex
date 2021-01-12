@@ -59,7 +59,7 @@ bottom=2.5cm]{geometry}
 
 %--------------------------------------------------------------------%
 \title{Software implementation for the proximal gradient methods}
-\author{}
+\author{Zeyu Jin, Ting Lin}
 \date{\today}
 
 \begin{document}
@@ -308,13 +308,13 @@ bottom=2.5cm]{geometry}
     \end{displaymath}
     
     \item {Indicator of $\ell_2$-ball:} $h(x) = 
-    \mi_{\{y\} + B_{\norm{\cdot}_2}(R)}$, where $x, y \in \mr^n$.
+    \mi_{ B_{\norm{\cdot}_2}(R)}$, where $x, y \in \mr^n$.
     The proximal operator of $\mu h(x)$ is given by
     \begin{displaymath}
       \prox_{\mu h}(x) = 
       \begin{cases}
-        x, & \norm{x - y}_2 \le R, \\
-        y + \frac{R}{\norm{x - y}_2}(x - y), & \norm{x - y}_2 > R.
+        x, & \norm{x}_2 \le R, \\
+        \frac{R}{\norm{x}_2}(x), & \norm{x}_2 > R.
       \end{cases}
     \end{displaymath}
     
