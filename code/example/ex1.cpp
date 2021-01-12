@@ -23,5 +23,5 @@ int main(){
         if(abs(x[i])<1e-4) cnt ++ ;
     }
     cout << cnt << endl;
-    cout << (x-u0).lpNorm<1>() << endl;
+    cout << (x-u0).lpNorm<1>()/u0.lpNorm<1>() << endl;
 }
