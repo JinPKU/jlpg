@@ -35,15 +35,4 @@ int main(){
     }
     cout << cnt / double(512) << endl;
     cout << (x-u0).lpNorm<1>()/u0.lpNorm<1>() << endl;
-
-    // p.mu = 0.01;
-    // cout << p.value(u0) << endl;
-    // p.mu*=(1<<15);
-    // Options opts(10000, 1e-8*(1<<15), 1e-6*(1<<15), 1e-0, 5e-1);
-    // opts.setClassical();
-
-    // for(int i = 0; i < 15; i ++){
-    //     x = pgm(p,x,opts);
-    //     p.mu/=2, opts.ftol/=2,opts.gtol/=2;
-    // }
 }

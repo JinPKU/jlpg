@@ -254,7 +254,7 @@ return x.lpNorm<1>()<R?0:inf;
 }
 
 Vec L1_BALL_PROXH(Vec x, Real R, Real t){
-    if(x.lpNorm<1>()<R) return x;
+    if(x.lpNorm<1>()<=R) return x;
     Vec u = x.array().abs();
     int sz = x.size();
     std::sort(u.data(),u.data()+u.size(),std::greater<Real>());
@@ -282,7 +282,7 @@ prox_pair<Vec> Linf_NORM(Linf_NORM_H,Linf_NORM_PROXH);
 
 // L2 ball 
 Real L2_BALL_H(Vec x, Real R){
-return x.lpNorm<2>()<R?0:inf;
+return x.lpNorm<2>()<=R?0:inf;
 }
 
 Vec L2_BALL_PROXH(Vec x, Real R, Real t){
@@ -297,15 +297,15 @@ prox_pair<Vec> L2_BALL(Real R){
 
 // Linf ball 
 Real Linf_BALL_H(Vec x, Real R){
-return x.lpNorm<Eigen::Infinity>()<R?0:inf;
+return (x.lpNorm<Eigen::Infinity>()<=R)?0:inf;
 }
 
 Vec Linf_BALL_PROXH(Vec x, Real R, Real t){
-    return (x.array().sign())*(x.array()).min(R);
+    return (x.array().sign())*(x.array().abs().min(R));
 }
 
-prox_pair<Vec> Linf_ALL(Real R){
-    return prox_pair<Vec>(bind(L2_BALL_H, placeholders::_1, R), bind(L2_BALL_PROXH, placeholders::_1, R, placeholders::_2));
+prox_pair<Vec> Linf_BALL(Real R){
+    return prox_pair<Vec>(bind(Linf_BALL_H, placeholders::_1, R), bind(Linf_BALL_PROXH, placeholders::_1, R, placeholders::_2));
 }
 
 
