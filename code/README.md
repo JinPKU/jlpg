@@ -19,11 +19,11 @@ Implemented by \
 
 
 ## Dependency
-  1. Need C++11 support, GCC(>=5.0) is recommended. It is welcome to inform us that the performance under other compile enviroments.
-  2. Eigen(>=3.0) is required.  
+  1. Need C++11 support, **GCC(>=5.0)** is recommended. It is welcome to inform us that the performance under other compile enviroments.
+  2. **Eigen(>=3.0)** is required.  
 
 
-## mini example to illustrate how our package works:
+## Mini example to illustrate how our package works:
 1. Include the necessary files 
   ```C++
   #include <iostream>  
