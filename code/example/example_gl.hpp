@@ -10,7 +10,7 @@ void example_gl(Problem<Mat> &p) {
     
     Mat b(3,2); b<<1,1,1,1,1,1;
     p = Problem<Mat>(LS(A, b), L12_NORM);
-    p.mu = 0.01;
+    p.mu = 1;
 }
 
 
