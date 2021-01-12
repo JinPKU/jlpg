@@ -11,7 +11,6 @@ Vec gradf(Vec x){return x;}
 
 
 int main(){
-<<<<<<< HEAD
     Mat A(3,2);
     A<<1,2,3,4,5,6;
     Mat x(2,2);  x<<1,2,3,4; 
@@ -23,13 +22,7 @@ int main(){
     // Vec x(3);
     // x << -2,0.5,1;
     // cout << p.f(x) << endl;
-	Options opts(1,1, 10000, 1e-8, 1e-6, 1e-2, Classical);
-=======
-    Mat A(3,2); A<<1,2,3,4,5,6;
-    Vec x(2); x<<1,2;
-    Vec b(3); b<<1,1,1;
-    Problem<Vec> p(LS(A,b),L0_NORM);
-	Options opts(1,1, 10000, 1e-8, 1e-6, 1e-2);
->>>>>>> 8b35e73a8dff89973c3bd54201d99657dd4c4569
+	Options opts(10000, 1e-8, 1e-6, 1e-2);
+    opts.setClassical();
     cout << pgm(p, x, opts) << endl;
 }

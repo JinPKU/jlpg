@@ -9,7 +9,7 @@
 #include<time.h>
 #include<stdio.h>
 
-enum LineSearchRule { Armijo, Nonmonotone, Classical };
+enum StepSizeRule { Constant, Armijo, Nonmonotone, Classical };
 
 struct Options{
 
@@ -17,10 +17,36 @@ struct Options{
 	int maxiter;
 	Real ftol, gtol;
 	Real alpha;
-	LineSearchRule rule;
+	Real rho;
+	StepSizeRule rule;
 
-	Options(bool LineSearchEnabled, bool BBMethodEnabled, int maxiter, Real ftol, Real gtol, Real alpha, LineSearchRule rule): 
-	LineSearchEnabled(LineSearchEnabled), BBMethodEnabled(BBMethodEnabled), maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha), rule(rule) {};
+	Options(int maxiter, Real ftol, Real gtol, Real alpha): maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha) {};
+
+	void setConstant() {
+		LineSearchEnabled = false;
+		BBMethodEnabled = false;
+		rule = Constant;
+	}
+
+	void setArmijo(Real rho_) {
+		LineSearchEnabled = true;
+		BBMethodEnabled = true;
+		rule = Armijo;
+		rho = rho_;
+	}
+
+	void setNonmonotone() {
+		LineSearchEnabled = true;
+		BBMethodEnabled = true;
+		rule = Nonmonotone;
+	}
+
+	void setClassical() {
+		LineSearchEnabled = true;
+		BBMethodEnabled = true;
+		rule = Classical;
+	}
+	
 };
 
 
