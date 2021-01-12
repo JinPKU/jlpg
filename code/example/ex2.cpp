@@ -14,7 +14,8 @@ int main(){
     Problem<Vec> p(LS(A,b),Linf_BALL(0.1));
     p.mu = 0.01;
     Options opts(10000, 1e-8, 1e-6, 1e-0, 5e-1);
+    Outputs out;
     opts.setClassical();
-    x = pgm(p,x,opts);
+    x = pgm(p,x,opts,out);
     cout << x << endl;
 }

@@ -62,9 +62,15 @@ struct Options{
 	
 };
 
+struct Outputs{
+int iter;
+bool Flag;
+Real cputime; 
+Real F_cur, f_cur, nrmG;
+};
 
 template <typename T>
-T pgm(Problem<T> p, T x, Options opts){
+T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 #if VERBOSED
     cout << "Proximal Gradient Method " << endl;
 	cout << "with ftol = " << opts.ftol << "  gtol = " << opts.gtol << endl;
@@ -141,7 +147,7 @@ T pgm(Problem<T> p, T x, Options opts){
 			F_cur = p.value(x);
 		}
 		
-#if true
+#if VERBOSED
     cout << "In iteration " << iter << ", objective function value = "<< F_cur << endl;
 #endif
 		
@@ -173,12 +179,16 @@ T pgm(Problem<T> p, T x, Options opts){
     }
 	Tend = clock();
 	Real during = (double)(Tend - Tstart)/CLOCKS_PER_SEC;
-#if true
+#if VERBOSED
     cout << "Problem Solved within " << iter+1 << " Iteration(s)." << endl;
 	cout << "Function value=" << F_cur << "; Optimality measure=" << nrmG << "." << endl;
 	cout << "Used Time:" << during << "(s)" << endl;
 #endif
-	
+	output.iter = iter;
+	output.cputime = during;
+	output.F_cur = F_cur;
+	output.f_cur = f_cur;
+	output.nrmG = nrmG; 
     return x;
 };
 
