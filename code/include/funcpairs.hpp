@@ -122,9 +122,15 @@ grad_pair<Vec> LOGISTIC(Mat A, Vec b){
 
 
 // L0 form
-// Real L0_NORM_H(Vec x){return x.nonZeros();}
-// Vec L0_NORM_PROXH(Vec x, Real t){return (x.array()*(x.array()>sqrt(2*t))).matrix();}
-// prox_pair<Vec> L0_NORM(L0_NORM_H,L0_NORM_PROXH);
+Real L0_NORM_H(Vec x){return (Real)(x.nonZeros());}
+Vec L0_NORM_PROXH(Vec x, Real t){
+    Real s = sqrt(2*t);
+    int sz = x.size();
+    Vec u(x);
+    for(int i=0;i<sz;i++){u[i] = abs(x[i])>s?x[i]:0;}
+    return u;
+}
+prox_pair<Vec> L0_NORM(L0_NORM_H,L0_NORM_PROXH);
 
 
 
