@@ -19,7 +19,7 @@ Implemented by \
 
 
 ## Dependency
-  1. Need C++11 support, **GCC(>=5.0)** is recommended. It is welcome to inform us that the performance under other compile enviroments.
+  1. Need C++11 support, **G++(>=5.0)** is recommended. It is welcome to inform us that the performance under other compile enviroments.
   2. **Eigen(>=3.0)** is required.  
 
 
@@ -63,3 +63,9 @@ Vec x(3); x << 0,0,0; //init value
 x = pgm(p,x,opts,out);
 cout << x << endl;
 ```
+
+6. Suitable compile command
+```
+g++ -O3 -march=native -std=c++11 naivelasso -o naivelasso.out -I../include -DVERBOSED=1 
+```
+Here `-DVERBOSED=1` enable us to get the information at each iteration.
