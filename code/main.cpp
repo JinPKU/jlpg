@@ -17,11 +17,11 @@ int main(){
     Mat b(3,2); b<<1,1,1,1,1,1;
     // Vec b(2);
     // b<<1,2;
-    Problem<Mat> p(LS(A,b),NO_PROX);
+    Problem<Mat> p(LS(A,b),L12_NORM);
     // cout << p.value(x) << endl;
     // Vec x(3);
     // x << -2,0.5,1;
     // cout << p.f(x) << endl;
-	Options opts(true, true, 10000, 1e-8, 1e-6, 1e-2);
+	Options opts(1,1, 10000, 1e-8, 1e-6, 1e-2);
     cout << pgm(p, x, opts) << endl;
 }

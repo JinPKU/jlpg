@@ -100,7 +100,7 @@ grad_pair<Vec> LS(Mat A, Vec b){
 
 // mat LS 
 Real LS_FM(Mat A, Mat b, Mat x){return .5*(A*x-b).squaredNorm();}
-Vec LS_GRADFM(Mat A, Mat b, Mat x){return A.transpose()*(A*x - b);}
+Mat LS_GRADFM(Mat A, Mat b, Mat x){return A.transpose()*(A*x - b);}
 grad_pair<Mat> LS(Mat A, Mat b){
     return grad_pair<Mat> (bind(LS_FM,A,b,placeholders::_1),bind(LS_GRADFM,A,b,placeholders::_1));
 }
