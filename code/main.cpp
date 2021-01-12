@@ -6,9 +6,6 @@
 //#include "./src/solver.cpp"
 using namespace std;
 //using namespace Solver;
-Real f(Vec x){return x(0);}
-Vec gradf(Vec x){return x;}
-
 
 
 int main(){

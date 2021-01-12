@@ -1,14 +1,14 @@
-- [ ] the proximal operator $l^{\infty}$ 
+- [x] the proximal operator $l^{\infty}$ 
 - [ ] Add the theorhetic result, and the description of algorithm. @J
-- [ ] Step size, complete the NBB step and Armijo @J
-- [ ] Implementing $f$ component.
-- [ ] Implementing $h$ component.  @L
+- [x] Step size, complete the NBB step and Armijo @J
+- [x] Implementing $f$ component.
+- [x] Implementing $h$ component.  @L
 - [ ] Interface problem: gluing the block vector 
 
 
 - [ ] complete $l^{2,1}$ norm 
 
-- [ ] Output: Iteration time, Optimal Condition, CPU time, Function Value.  @L
+- [x] Output: Iteration time, Optimal Condition, CPU time, Function Value.  @L
 
 
 ## Numerical Part
