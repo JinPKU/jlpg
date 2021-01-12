@@ -22,7 +22,7 @@ int main(){
     // Vec x(3);
     // x << -2,0.5,1;
     // cout << p.f(x) << endl;
-	Options opts(10000, 1e-8, 1e-6, 1e-0);
+	Options opts(10000, 1e-8, 1e-6, 1e-0, 5e-1);
     opts.setArmijo(1e-3);
     cout << pgm(p, x, opts) << endl;
 }

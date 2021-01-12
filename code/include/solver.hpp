@@ -16,11 +16,11 @@ struct Options{
 	bool LineSearchEnabled, BBMethodEnabled;
 	int maxiter;
 	Real ftol, gtol;
-	Real alpha;
+	Real alpha, eta;
 	Real rho;
 	StepSizeRule rule;
 
-	Options(int maxiter, Real ftol, Real gtol, Real alpha): maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha) {};
+	Options(int maxiter, Real ftol, Real gtol, Real alpha, Real eta): maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha), eta(eta) {};
 
 	void setConstant() {
 		LineSearchEnabled = false;
@@ -93,14 +93,14 @@ T pgm(Problem<T> p, T x, Options opts){
 					break;
 
 					case Classical:
-					//if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) flag = false;
+					if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) flag = false;
 					break;
 				}
 
 				if (nls == 10) flag = false;
 				if (!flag) break;
 				
-				alpha = 0.5 * alpha; nls = nls + 1;
+				alpha = opts.eta * alpha; nls = nls + 1;
 				x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
 			}
 
