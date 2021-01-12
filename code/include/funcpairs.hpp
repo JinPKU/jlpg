@@ -82,6 +82,14 @@ prox_pair<T>:: prox_pair(function<Real(T)> h, function<T(T, Real)> proxh){
 /*--------------------------------
         BUILT-IN IMPLEMENTATIONS
 ------------------------------- */
+// No grad pair
+
+
+// No prox pair
+Real NO_PROX_H(Mat x){return 0;}
+Mat NO_PROX_PROXH(Mat x, Real t){return x;}
+prox_pair<Mat> NO_PROX(NO_PROX_H,NO_PROX_PROXH);
+
 
 // vec LS
 Real LS_F(Mat A, Vec b, Vec x){return .5*(A*x-b).squaredNorm();}
@@ -114,9 +122,9 @@ grad_pair<Vec> LOGISTIC(Mat A, Vec b){
 
 
 // L0 form
-Real L0_NORM_H(Vec x){return x.nonZeros();}
-Vec L0_NORM_PROXH(Vec x, Real t){return (x.array()*(x.array()>sqrt(2*t))).matrix();}
-prox_pair<Vec> L0_NORM(L0_NORM_H,L0_NORM_PROXH);
+// Real L0_NORM_H(Vec x){return x.nonZeros();}
+// Vec L0_NORM_PROXH(Vec x, Real t){return (x.array()*(x.array()>sqrt(2*t))).matrix();}
+// prox_pair<Vec> L0_NORM(L0_NORM_H,L0_NORM_PROXH);
 
 
 
@@ -131,7 +139,7 @@ prox_pair<Vec> L1_NORM(L1_NORM_H,L1_NORM_PROXH);
 Real L2_NORM_H(Vec x){return x.lpNorm<2>();}
 Vec L2_NORM_PROXH(Vec x, Real t){
 Real nrm = x.lpNorm<2>();
-return max(nrm-t,0)/nrm*x;
+return max(nrm-t,0.0)/nrm*x;
 }
 prox_pair<Vec> L2_NORM(L2_NORM_H,L2_NORM_PROXH);
 
@@ -139,6 +147,20 @@ prox_pair<Vec> L2_NORM(L2_NORM_H,L2_NORM_PROXH);
 
 // L inf norm 
 
+
+
+
+// L12 norm 
+Real L12_NORM_H(Mat x){
+    return x.rowwise().lpNorm<2>().sum();
+}
+Mat L12_NORM_PROXH(Mat x, Real t){
+    Vec u = x.rowwise().lpNorm<2>();
+
+    return ((x.array().colwise()) * (1-t/u.array()).max(0)).matrix();
+}
+
+prox_pair<Mat> L12_NORM(L12_NORM_H,L12_NORM_PROXH);
 
 
 
