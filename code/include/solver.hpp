@@ -170,6 +170,7 @@ T pgm(Problem<T> p, T x, Options opts){
 	Real during = (double)(Tend - Tstart)/CLOCKS_PER_SEC;
 #if true
     cout << "Problem Solved within " << iter+1 << " Iteration(s)." << endl;
+	cout << "Function value=" << F_cur << "; Optimality measure=" << nrmG << "." << endl;
 	cout << "Used Time:" << during << "(s)" << endl;
 #endif
 	
