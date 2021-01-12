@@ -11,6 +11,7 @@ Implemented by \
   - `funcpairs.hpp` define useful function pairs like `LS`, `L1_NORM`, `L2_NORM`
   - `problem.hpp` the construction and basic function of the objective.
   - `solver.hpp` the solver of our proximal gradient method
+  - `continuation.hpp` provide an interface to use continuation method accelerating our program.
 
 `/example` contains some examples we create in order to reveal the power of our package. 
  - `ex1.cpp` the lasso problem of size 1000.
