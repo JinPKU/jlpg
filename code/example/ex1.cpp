@@ -13,15 +13,14 @@ int main(){
     Vec b = A*u0;
     Vec x = Vec::Zero(1000);
     Problem<Vec> p(LS(A,b),L1_NORM);
-    p.mu = 10;
-    Options opts(10000, 1e-8, 1e-6, 1e-0, 5e-1);
+    p.mu = 0.01;
+    cout << p.value(u0) << endl;
+    p.mu*=(1<<15);
+    Options opts(10000, 1e-8*(1<<15), 1e-6*(1<<15), 1e-0, 5e-1);
     opts.setClassical();
 
-    x = pgm(p,x,opts);
-    int cnt = 0;
-    for(int i = 0; i < 1000; i++){
-        if(abs(x[i])<1e-4) cnt ++ ;
+    for(int i = 0; i < 15; i ++){
+        x = pgm(p,x,opts);
+        p.mu/=2, opts.ftol/=2,opts.gtol/=2;
     }
-    cout << cnt << endl;
-    cout << (x-u0).lpNorm<1>()/u0.lpNorm<1>() << endl;
 }
