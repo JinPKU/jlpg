@@ -13,7 +13,7 @@
 #include <algorithm>
 using namespace std;
 
-#define NINF (-__DBL_MAX__)
+const double ninf = -std::numeric_limits<double>::infinity();
 
 enum StepSizeRule { Constant, Armijo, Nonmonotone, Classical };
 
@@ -87,7 +87,11 @@ T pgm(Problem<T> p, T x, Options opts){
 	vector<Real> f_hist;
 
 	if (opts.rule == Nonmonotone) {
-		f_hist = vector<Real>(opts.M, NINF);
+		f_hist = vector<Real>(opts.M, ninf);
+		for (int j = 0; j< opts.M; ++j) {
+			printf("%e ", f_hist[j]);
+		}
+		printf("\n");
 	}
 
     for( iter = 0; iter < opts.maxiter; ++iter ){
@@ -137,7 +141,7 @@ T pgm(Problem<T> p, T x, Options opts){
 			F_cur = p.value(x);
 		}
 		
-#if VERBOSED
+#if true
     cout << "In iteration " << iter << ", objective function value = "<< F_cur << endl;
 #endif
 		
