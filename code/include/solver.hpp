@@ -9,6 +9,7 @@
 #include<time.h>
 #include<stdio.h>
 
+enum LineSearchRule { Armijo, Nonmonotone, Classical };
 
 struct Options{
 
@@ -16,9 +17,10 @@ struct Options{
 	int maxiter;
 	Real ftol, gtol;
 	Real alpha;
+	LineSearchRule rule;
 
-	Options(bool LineSearchEnabled, bool BBMethodEnabled, int maxiter, Real ftol, Real gtol, Real alpha): 
-	LineSearchEnabled(LineSearchEnabled), BBMethodEnabled(BBMethodEnabled), maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha) {};
+	Options(bool LineSearchEnabled, bool BBMethodEnabled, int maxiter, Real ftol, Real gtol, Real alpha, LineSearchRule rule): 
+	LineSearchEnabled(LineSearchEnabled), BBMethodEnabled(BBMethodEnabled), maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha), rule(rule) {};
 };
 
 
@@ -40,17 +42,36 @@ T pgm(Problem<T> p, T x, Options opts){
 	Real tmp, nrmG;
 	clock_t  Tstart, Tend;
 	Tstart = clock();
+	bool flag = true;
+
     for( iter = 0; iter < opts.maxiter; ++iter ){
 		F_prev = F_cur;
 		f_prev = f_cur;
 		g_prev = g_cur;
 		x_prev = x;
+
         x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
 		if (opts.BBMethodEnabled) {
 			nls = 0;
 			while (true) {
 				tmp = p.f(x);
-				if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm() || nls == 10) { break; }
+
+				switch (opts.rule) {
+					case Armijo:
+
+					break;
+
+					case Nonmonotone:
+
+					break;
+
+					case Classical:
+					if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) flag = false;
+					break;
+				}
+
+				if (nls == 10) flag = false;
+				if (!flag) break;
 				
 				alpha = 0.5 * alpha; nls = nls + 1;
 				x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);

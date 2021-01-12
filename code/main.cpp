@@ -22,6 +22,6 @@ int main(){
     // Vec x(3);
     // x << -2,0.5,1;
     // cout << p.f(x) << endl;
-	Options opts(1,1, 10000, 1e-8, 1e-6, 1e-2);
+	Options opts(1,1, 10000, 1e-8, 1e-6, 1e-2, Classical);
     cout << pgm(p, x, opts) << endl;
 }
