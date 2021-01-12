@@ -63,10 +63,10 @@ struct Options{
 };
 
 struct Outputs{
-int iter;
-bool Flag;
-Real cputime; 
-Real F_cur, f_cur, nrmG;
+	int iter;
+	bool Flag;
+	Real cputime; 
+	Real F_cur, f_cur, nrmG;
 };
 
 template <typename T>
@@ -89,8 +89,9 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 	Real f_hist_max;
 	clock_t  Tstart, Tend;
 	Tstart = clock();
-	bool flag;
+	bool lsFlag;
 	vector<Real> f_hist;
+	output.Flag = false;
 
 	if (opts.rule == Nonmonotone) {
 		f_hist = vector<Real>(opts.M, ninf);
@@ -114,26 +115,26 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
         x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
 		if (opts.BBMethodEnabled) {
 			nls = 0;
-			flag = true;
+			lsFlag = true;
 			while (true) {
 				tmp = p.f(x);
 
 				switch (opts.rule) {
 					case Armijo:
-					if (tmp <= f_prev + opts.rho * (g_prev.array()*(x - x_prev).array()).sum()) flag = false;
+					if (tmp <= f_prev + opts.rho * (g_prev.array()*(x - x_prev).array()).sum()) lsFlag = false;
 					break;
 
 					case Nonmonotone:
-					if (tmp <= f_hist_max + opts.rho * (g_prev.array()*(x - x_prev).array()).sum()) flag = false;
+					if (tmp <= f_hist_max + opts.rho * (g_prev.array()*(x - x_prev).array()).sum()) lsFlag = false;
 					break;
 
 					case Classical:
-					if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) flag = false;
+					if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) lsFlag = false;
 					break;
 				}
 
-				if (nls == 20) flag = false;
-				if (!flag) break;
+				if (nls == 20) lsFlag = false;
+				if (!lsFlag) break;
 				
 				alpha = opts.eta * alpha; nls = nls + 1;
 				x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
@@ -174,6 +175,7 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 		}
 
         if (abs(F_cur - F_prev) < opts.ftol || nrmG < opts.gtol){
+			output.Flag = true;
 			break;
 		} 
     }
