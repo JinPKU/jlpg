@@ -67,6 +67,7 @@ template <typename T>
 T pgm(Problem<T> p, T x, Options opts){
 #if VERBOSED
     cout << "Proximal Gradient Method " << endl;
+	cout << "with ftol = " << opts.ftol << "  gtol = " << opts.gtol << endl;
 #endif
 	Real F_prev, f_prev;	// F = f + h
 	T x_prev, g_prev;
