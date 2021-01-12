@@ -169,6 +169,26 @@ Mat L12_NORM_PROXH(Mat x, Real t){
 prox_pair<Mat> L12_NORM(L12_NORM_H,L12_NORM_PROXH);
 
 
+// L21 norm
+
+
+
+
+
+
+// nuclear norm 
+Real NUCLEAR_NORM_H(Mat x){
+    Eigen::BDCSVD<Mat> svd(x, Eigen::ComputeThinU|Eigen::ComputeThinV); // this might lead to inefficiency.
+    return svd.singularValues().sum();
+}
+
+Mat NUCLEAR_NORM_PROXH(Mat x, Real t){
+        Eigen::BDCSVD<Mat> svd(x, Eigen::ComputeThinU|Eigen::ComputeThinV);
+        Vec s = svd.singularValues();
+        return svd.matrixU() * (s.array() - t).max(0).matrix().asDiagonal() * svd.matrixV().transpose();
+}
+
+prox_pair<Mat> NUCLEAR_NORM(NUCLEAR_NORM_H,NUCLEAR_NORM_PROXH);
 
 
 #endif    /* __JLPG_HPP__ */

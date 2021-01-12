@@ -17,7 +17,8 @@ int main(){
     Mat b(3,2); b<<1,1,1,1,1,1;
     // Vec b(2);
     // b<<1,2;
-    Problem<Mat> p(LS(A,b),L12_NORM);
+    Problem<Mat> p(LS(A,b),NUCLEAR_NORM);
+    p.mu =1;
     // cout << p.value(x) << endl;
     // Vec x(3);
     // x << -2,0.5,1;
