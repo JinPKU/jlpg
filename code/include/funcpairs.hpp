@@ -182,8 +182,13 @@ prox_pair<Mat> L12_NORM(L12_NORM_H,L12_NORM_PROXH);
 
 
 // L21 norm
-
-
+Real L21_NORM_H(Mat x){
+    return x.rowwise().lpNorm<1>().lpNorm<2>();
+}
+Real L21_NORM_PROXH(Mat x, Real t){
+    return t;
+}
+prox_pair<Mat> L21_NORM(L21_NORM_H,L21_NORM_PROXH);
 
 
 
