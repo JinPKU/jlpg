@@ -68,7 +68,7 @@ T pgm(Problem<T> p, T x, Options opts){
 	Real tmp, nrmG;
 	clock_t  Tstart, Tend;
 	Tstart = clock();
-	bool flag = true;
+	bool flag;
 
     for( iter = 0; iter < opts.maxiter; ++iter ){
 		F_prev = F_cur;
@@ -79,12 +79,13 @@ T pgm(Problem<T> p, T x, Options opts){
         x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
 		if (opts.BBMethodEnabled) {
 			nls = 0;
+			flag = true;
 			while (true) {
 				tmp = p.f(x);
 
 				switch (opts.rule) {
 					case Armijo:
-
+					if (tmp <= f_prev + opts.rho * (g_prev.array()*(x - x_prev).array()).sum()) flag = false;
 					break;
 
 					case Nonmonotone:
@@ -92,7 +93,7 @@ T pgm(Problem<T> p, T x, Options opts){
 					break;
 
 					case Classical:
-					if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) flag = false;
+					//if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) flag = false;
 					break;
 				}
 
