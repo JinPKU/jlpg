@@ -14,7 +14,7 @@ int main(){
     Vec x = Vec::Zero(512);
     Problem<Vec> p(LS(A,b),L1_NORM);
     Options opts(10000, 1e-10, 1e-8, 1e-1, 5e-1);
-    opts.setClassical();
+    opts.setNonmonotone(0.9, 10);
 
     p.mu = 1e2;
     x = pgm(p,x,opts);
