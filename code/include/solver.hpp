@@ -45,7 +45,6 @@ T pgm(Problem<T> p, T x, Options opts){
 		f_prev = f_cur;
 		g_prev = g_cur;
 		x_prev = x;
-		cout << x << endl;
         x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
 		if (opts.BBMethodEnabled) {
 			nls = 0;
