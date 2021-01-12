@@ -101,10 +101,10 @@ template<typename T>
 Real NO_PROX_H(Vec x){return 0;}
 Vec NO_PROX_PROXH(Vec x, Real t){return x;}
 prox_pair<Vec> NO_PROX(NO_PROX_H,NO_PROX_PROXH);
+
 Real NO_PROX_HM(Mat x){return 0;}
 Mat NO_PROX_PROXHM(Mat x, Real t){return x;}
-prox_pair<Mat> NO_PROX(NO_PROX_HM,NO_PROX_PROXHM);
-
+prox_pair<Mat> NO_PROX_MAT(NO_PROX_H,NO_PROX_PROXH);
 
 // vec LS
 Real LS_F(Mat A, Vec b, Vec x){return .5*(A*x-b).squaredNorm();}
@@ -164,9 +164,6 @@ return max(nrm-t,0.0)/nrm*x;
 }
 prox_pair<Vec> L2_NORM(L2_NORM_H,L2_NORM_PROXH);
 
-
-
-// L inf norm 
 
 
 
@@ -247,7 +244,34 @@ prox_pair<Vec> L0_BALL(Real R){
 
 
 // L1 ball 
+Real L1_BALL_H(Vec x, Real R){
+return x.lpNorm<1>()<R?0:inf;
+}
 
+Vec L1_BALL_PROXH(Vec x, Real R, Real t){
+    if(x.lpNorm<1>()<R) return x;
+    Vec u = x.array().abs();
+    int sz = x.size();
+    std::sort(u.data(),u.data()+u.size(),std::greater<Real>());
+    double R0 = 0;
+    int i = 0;
+    for(i = 0 ; i <sz; i++){R0+=(i+1)*(u[i]-u[i+1]); if(R0>R) break;}
+    double th = (R0-R)/(i+1) + u[i+1];
+    return (x.array().sign())*(x.array() - th).max(0);
+}
+
+prox_pair<Vec> L1_BALL(Real R){
+    return prox_pair<Vec>(bind(L1_BALL_H, placeholders::_1, R), bind(L1_BALL_PROXH, placeholders::_1, R, placeholders::_2));
+}
+
+
+// L inf norm 
+
+Real Linf_NORM_H(Vec x){return x.lpNorm<Eigen::Infinity>();}
+Vec Linf_NORM_PROXH(Vec x, Real t){
+    return x - t*L1_BALL_PROXH(x/t,1,t);
+}
+prox_pair<Vec> Linf_NORM(Linf_NORM_H,Linf_NORM_PROXH);
 
 
 
@@ -267,7 +291,17 @@ prox_pair<Vec> L2_BALL(Real R){
 
 
 // Linf ball 
+Real Linf_BALL_H(Vec x, Real R){
+return x.lpNorm<Eigen::Infinity>()<R?0:inf;
+}
 
+Vec Linf_BALL_PROXH(Vec x, Real R, Real t){
+    return (x.array().sign())*(x.array()).min(R);
+}
+
+prox_pair<Vec> Linf_ALL(Real R){
+    return prox_pair<Vec>(bind(L2_BALL_H, placeholders::_1, R), bind(L2_BALL_PROXH, placeholders::_1, R, placeholders::_2));
+}
 
 
 // simple box
