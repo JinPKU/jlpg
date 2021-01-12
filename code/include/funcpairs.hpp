@@ -151,7 +151,7 @@ prox_pair<Vec> L0_NORM(L0_NORM_H,L0_NORM_PROXH);
 
 // L1 norm 
 Real L1_NORM_H(Vec x){return x.lpNorm<1>();}
-Vec L1_NORM_PROXH(Vec x, Real t){return (x.array().sign())*(x.array() - t).max(0);}
+Vec L1_NORM_PROXH(Vec x, Real t){return (x.array().sign())*(x.array().abs() - t).max(0);}
 prox_pair<Vec> L1_NORM(L1_NORM_H,L1_NORM_PROXH);
 
 

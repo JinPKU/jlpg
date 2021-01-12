@@ -126,7 +126,7 @@ T pgm(Problem<T> p, T x, Options opts){
 					break;
 				}
 
-				if (nls == 10) flag = false;
+				if (nls == 20) flag = false;
 				if (!flag) break;
 				
 				alpha = opts.eta * alpha; nls = nls + 1;

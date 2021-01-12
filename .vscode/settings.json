@@ -85,5 +85,9 @@
         "*.log",
         "*.fdb_latexmk"
     ],
+    "files.associations": {
+        "iostream": "cpp",
+        "algorithm": "cpp"
+    },
 
 }
