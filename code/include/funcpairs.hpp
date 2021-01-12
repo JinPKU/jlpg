@@ -18,7 +18,7 @@ using namespace std;
 typedef double Real;
 typedef Eigen::VectorXd Vec;
 typedef Eigen::MatrixXd Mat;
-
+double inf = std::numeric_limits<double>::infinity();
 
 /* ------------------------------------------------------------------------- 
         CLASS DECLARATIONS
@@ -191,5 +191,79 @@ Mat NUCLEAR_NORM_PROXH(Mat x, Real t){
 prox_pair<Mat> NUCLEAR_NORM(NUCLEAR_NORM_H,NUCLEAR_NORM_PROXH);
 
 
+
+// elastic net 
+Real ELASTIC_NET_H(Vec x, Real lam){
+    return x.lpNorm<1>() + lam/2*x.squaredNorm();
+}
+Vec ELASTIC_NET_PROXH(Vec x, Real lam, Real t){return (x.array().sign())*(x.array() - t).max(0)/(1+lam*t);}
+
+prox_pair<Vec> ELASTIC_NET(Real lam){
+return prox_pair<Vec> (bind(ELASTIC_NET_H,placeholders::_1, lam), bind(ELASTIC_NET_PROXH, placeholders::_1, lam, placeholders::_2));
+}
+
+// sum log
+Real SUM_LOG_H(Vec x){
+    return -x.array().log().sum();
+}
+
+Vec SUM_LOG_PROXH(Vec x, Real t){return (x.array()+(x.array()*x.array()+4*t).sqrt())/2;}
+
+prox_pair<Vec> SUM_LOG(SUM_LOG_H, SUM_LOG_PROXH);
+
+// L0 ball 
+Real L0_BALL_H(Vec x, Real R){
+return x.nonZeros()<R?0:inf;
+}
+
+Vec L0_BALL_PROXH(Vec x, Real R, Real t){
+    Vec u = x.array().abs();
+    int sz = x.size();
+    std::sort(u.data(),u.data()+u.size(),std::greater<Real>());
+    int R0 = min((int)floor(R),sz);
+    double th = R0>0?u[R0-1]:0;
+    for(int i = 0 ; i <sz; i++){u[i] = abs(x[i])>=th?abs(x[i]):0;}
+    return u;
+}
+
+prox_pair<Vec> L0_BALL(Real R){
+    return prox_pair<Vec>(bind(L0_BALL_H, placeholders::_1, R), bind(L0_BALL_PROXH, placeholders::_1, R, placeholders::_2));
+}
+
+
+// L1 ball 
+
+
+
+
+// L2 ball 
+Real L2_BALL_H(Vec x, Real R){
+return x.lpNorm<2>()<R?0:inf;
+}
+
+Vec L2_BALL_PROXH(Vec x, Real R, Real t){
+    return R/max(x.lpNorm<2>(),R)*x;
+}
+
+prox_pair<Vec> L2_BALL(Real R){
+    return prox_pair<Vec>(bind(L2_BALL_H, placeholders::_1, R), bind(L2_BALL_PROXH, placeholders::_1, R, placeholders::_2));
+}
+
+
+
+// Linf ball 
+
+
+
+// simple box
+Real BOX_H(Vec x, Vec lx, Vec ux){
+    return (x.array()>lx.array()).all() && (x.array()<ux.array()).all()?0:inf;
+}
+Vec BOX_PROXH(Vec x, Vec lx, Vec ux){
+    return x.cwiseMax(lx).cwiseMin(ux);
+}
+prox_pair<Vec> BOX(Vec lx, Vec ux){
+    return prox_pair<Vec> (bind(BOX_H,placeholders::_1,lx,ux),bind(BOX_PROXH,placeholders::_1,lx,ux));
+}
 #endif    /* __JLPG_HPP__ */
 
