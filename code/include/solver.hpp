@@ -6,19 +6,30 @@
 #endif
 
 #include <cmath>
-#include<time.h>
-#include<stdio.h>
+#include <time.h>
+#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+#define NINF (-__DBL_MAX__)
 
 enum StepSizeRule { Constant, Armijo, Nonmonotone, Classical };
 
 struct Options{
-
-	bool LineSearchEnabled, BBMethodEnabled;
 	int maxiter;
 	Real ftol, gtol;
 	Real alpha, eta;
 	Real rho;
 	StepSizeRule rule;
+
+	bool LineSearchEnabled, BBMethodEnabled;
+
+	// for BB method:
+	int M;
+	
+	
 
 	Options(int maxiter, Real ftol, Real gtol, Real alpha, Real eta): maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha), eta(eta) {};
 
@@ -35,10 +46,12 @@ struct Options{
 		rho = rho_;
 	}
 
-	void setNonmonotone() {
+	void setNonmonotone(Real rho_, int M_) {
 		LineSearchEnabled = true;
 		BBMethodEnabled = true;
 		rule = Nonmonotone;
+		rho = rho_;
+		M = M_;
 	}
 
 	void setClassical() {
@@ -66,11 +79,22 @@ T pgm(Problem<T> p, T x, Options opts){
 
     int iter, nls;
 	Real tmp, nrmG;
+	Real f_hist_max;
 	clock_t  Tstart, Tend;
 	Tstart = clock();
 	bool flag;
+	vector<Real> f_hist;
+
+	if (opts.rule == Nonmonotone) {
+		f_hist = vector<Real>(opts.M, NINF);
+	}
 
     for( iter = 0; iter < opts.maxiter; ++iter ){
+		if (opts.rule == Nonmonotone) {
+			f_hist[iter % opts.M] = f_cur;
+			f_hist_max = *max_element(f_hist.begin(), f_hist.end());
+		}
+
 		F_prev = F_cur;
 		f_prev = f_cur;
 		g_prev = g_cur;
@@ -89,7 +113,7 @@ T pgm(Problem<T> p, T x, Options opts){
 					break;
 
 					case Nonmonotone:
-
+					if (tmp <= f_hist_max + opts.rho * (g_prev.array()*(x - x_prev).array()).sum()) flag = false;
 					break;
 
 					case Classical:
