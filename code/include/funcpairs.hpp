@@ -83,15 +83,62 @@ prox_pair<T>:: prox_pair(function<Real(T)> h, function<T(T, Real)> proxh){
         BUILT-IN IMPLEMENTATIONS
 ------------------------------- */
 
-
+// vec LS
 Real LS_F(Mat A, Vec b, Vec x){return .5*(A*x-b).squaredNorm();}
 Vec LS_GRADF(Mat A, Vec b, Vec x){return A.transpose()*(A*x - b);}
 grad_pair<Vec> LS(Mat A, Vec b){
     return grad_pair<Vec> (bind(LS_F,A,b,placeholders::_1),bind(LS_GRADF,A,b,placeholders::_1));
 }
+
+// mat LS 
+Real LS_FM(Mat A, Mat b, Mat x){return .5*(A*x-b).squaredNorm();}
+Vec LS_GRADFM(Mat A, Mat b, Mat x){return A.transpose()*(A*x - b);}
+grad_pair<Mat> LS(Mat A, Mat b){
+    return grad_pair<Mat> (bind(LS_FM,A,b,placeholders::_1),bind(LS_GRADFM,A,b,placeholders::_1));
+}
+
+
+// logistic regression
+Real LOGISTIC_F(Mat A, Vec b, Vec x){
+return ((-b.array()*(A.transpose()*x).array()).exp()+1).log().mean();
+}
+Vec LOGISTIC_GRADF(Mat A, Vec b, Vec x){
+    int m = A.cols();
+    Vec xx = b.array()/((b.array()*(A.transpose()*x).array()).exp()+1);
+    return -A*xx.matrix()/m;
+    // return -A*(b.array()/((-b.array()*(A.transpose()*x).array()).exp()+1)/A.cols()).matrix();
+}
+grad_pair<Vec> LOGISTIC(Mat A, Vec b){
+    return grad_pair<Vec> (bind(LOGISTIC_F,A,b,placeholders::_1),bind(LOGISTIC_GRADF,A,b,placeholders::_1));
+}
+
+
+// L0 form
+Real L0_NORM_H(Vec x){return x.nonZeros();}
+Vec L0_NORM_PROXH(Vec x, Real t){return (x.array()*(x.array()>sqrt(2*t))).matrix();}
+prox_pair<Vec> L0_NORM(L0_NORM_H,L0_NORM_PROXH);
+
+
+
+// L1 norm 
 Real L1_NORM_H(Vec x){return x.lpNorm<1>();}
 Vec L1_NORM_PROXH(Vec x, Real t){return (x.array().sign())*(x.array() - t).max(0);}
 prox_pair<Vec> L1_NORM(L1_NORM_H,L1_NORM_PROXH);
+
+
+
+// L2 Norm
+Real L2_NORM_H(Vec x){return x.lpNorm<2>();}
+Vec L2_NORM_PROXH(Vec x, Real t){
+Real nrm = x.lpNorm<2>();
+return max(nrm-t,0)/nrm*x;
+}
+prox_pair<Vec> L2_NORM(L2_NORM_H,L2_NORM_PROXH);
+
+
+
+// L inf norm 
+
 
 
 

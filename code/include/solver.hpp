@@ -6,6 +6,9 @@
 #endif
 
 #include <cmath>
+#include<time.h>
+#include<stdio.h>
+
 
 struct Options{
 
@@ -17,6 +20,7 @@ struct Options{
 	Options(bool LineSearchEnabled, bool BBMethodEnabled, int maxiter, Real ftol, Real gtol, Real alpha): 
 	LineSearchEnabled(LineSearchEnabled), BBMethodEnabled(BBMethodEnabled), maxiter(maxiter), ftol(ftol), gtol(gtol), alpha(alpha) {};
 };
+
 
 template <typename T>
 T pgm(Problem<T> p, T x, Options opts){
@@ -34,7 +38,8 @@ T pgm(Problem<T> p, T x, Options opts){
 
     int iter, nls;
 	Real tmp, nrmG;
-
+	clock_t  Tstart, Tend;
+	Tstart = clock();
     for( iter = 0; iter < opts.maxiter; ++iter ){
 		F_prev = F_cur;
 		f_prev = f_cur;
@@ -90,9 +95,13 @@ T pgm(Problem<T> p, T x, Options opts){
 			break;
 		} 
     }
-#if VERBOSED
+	Tend = clock();
+	Real during = (double)(Tend - Tstart)/CLOCKS_PER_SEC;
+#if true
     cout << "Problem Solved within " << iter+1 << " Iteration(s)." << endl;
+	cout << "Used Time:" << during << "(s)" << endl;
 #endif
+	
     return x;
 };
 
