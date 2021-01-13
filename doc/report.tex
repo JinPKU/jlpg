@@ -71,14 +71,14 @@ bottom=2.5cm]{geometry}
   In this project, we consider the following composite optimization 
   problem
   \begin{equation}
-    \min\limits_{x} F(x) = f(x) + h(x),
+    \min\limits_{x} F(x) = f(x) + \mu h(x),
   \end{equation}
-  where $f(x)$ is differentiable and $h(x)$ is a function whose 
-  proximal operator is easily available.
-  The proximal operator of $h(x)$ is defined as
+  where $f(x)$ is differentiable, $h(x)$ is a function whose 
+  proximal operator is easily available, $\mu > 0$ is a given 
+  parameter.
+  The proximal operator of $\mu h(x)$ is defined as
   \begin{displaymath}
-    \prox_h(x) = \mathop{\arg\min}\limits_{u} h(u) + \frac{1}{2} 
-    \norm{u - x}^2.
+    \prox_{\mu h}(x) = \mathop{\arg\min}\limits_{u} \mu h(u) + \frac{1}{2} \norm{u - x}^2.
   \end{displaymath}
   Starting from a suitable initial point $x^0$, the proximal gradient 
   method is performed as
@@ -86,6 +86,7 @@ bottom=2.5cm]{geometry}
     x^{k+1} = \prox_{t_k h} (x^k - t_k \nabla f(x^k)),
   \end{displaymath}
   where $t_k$ is a chosen step size.
+  
   
   
   % description of algorithms & interpretation of implementation?

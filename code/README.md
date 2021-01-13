@@ -5,7 +5,7 @@ pgm(problem,initialvalue,option);
 ```
 to solve the problem.
 
-$$\newcommand{\prox}{\textbf{prox}}$$
+<!-- $$\newcommand{\prox}{\textbf{prox}}$$ -->
 ## Problem Construction
 The problem consists of the following three part:
 $$ p(x) = f(x) + \mu h(x)$$
@@ -19,3 +19,4 @@ The pair $(f,\nabla f)$ is represented by the template class `grad_pair<T>`. It 
 
 ### `prox_pair`
 The pair $(h, \textbf{prox}_{th}(x))$ is represented by the template class `prox_pair<T>`. It contains the following member, `h` and `gradh`. Here we require `h(x)` returns $h(x)$ and $proxh(x,t)$ returns $\textbf{prox}_{th}(x)$.
+

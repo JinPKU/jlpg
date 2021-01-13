@@ -92,7 +92,11 @@ Here `-DVERBOSED=1` enable us to get the information at each iteration.
   - `ELASTIC_NET(lam)` and `LOG_SUM`.
   - Naive gradient method, use `NO_PROX` or `NO_PROX_MAT`.
 
-3. Support four kind of optimization strategy, see table below.
+3. Support four kinds of optimization strategies to choose the step size:
+  - `Constant`: constant step size.
+  - `Armijo`: backtracking line search to achieve the Armijo condition.
+  - `Nonmonotone`: backtracking line search to achieve a non-monotone condition using the BB step size.
+  - `Classical`: a classical strategy to choose the step size in the proximal gradient method (See the document for details).
 
 
 4. Easy construction of new `grad_pair` and `prox_pair`. 
@@ -112,5 +116,5 @@ prox_pair<Vec> my_block_prox(h,proxh);
 ```
 An automatic setting for block proximal pair is under constructed...
 
-
+5. Support a continuation strategy.
 
