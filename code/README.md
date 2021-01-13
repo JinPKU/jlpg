@@ -17,5 +17,23 @@ Hence we need the value of $f$, and its gradient function; we need the value of 
 ### `grad_pair`
 The pair $(f,\nabla f)$ is represented by the template class `grad_pair<T>`. It contains the following member, `f` and `proxf`. Here we require `f(x)` returns $f(x)$, and `gradf(x)` returns $\nabla f(x)$. 
 
+The common construction method is
+```C++
+grad_pair<Vec> my_grad_pair(ff,gradff);
+
+grad_pair<Mat> my_grad_pair2;
+my_grad_pair2.f = ff;
+my_grad_pair2.gradf = gradff;
+```
+
 ### `prox_pair`
 The pair $(h, \textbf{prox}_{th}(x))$ is represented by the template class `prox_pair<T>`. It contains the following member, `h` and `gradh`. Here we require `h(x)` returns $h(x)$ and $proxh(x,t)$ returns $\textbf{prox}_{th}(x)$.
+
+The common sontruction method is 
+```C++
+prox_pair<Vec> my_prox_pair(hh,gradhh);
+
+grad_pair<Mat> my_grad_pair2;
+my_grad_pair2.f = ff;
+my_grad_pair2.gradf = gradff;
+```
