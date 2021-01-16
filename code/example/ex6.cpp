@@ -1,28 +1,29 @@
-// blocked norm ball constraint LS
+// simple box constrainted optimization.
 #include <iostream>
 #include <eigen3/Eigen/Dense>
 #include "jlpg.hpp"
 #include "continuation.hpp"
-
+#include <cmath>
 using namespace std;
 
-Real h(Vec x){
-    return L2_BALL_H(x.segment<10>(0), 1) + Linf_BALL_H(x.segment<10>(10),1);
+Real f(Vec x){
+    return exp(x[0]*x[3] - x[1]*x[2]) + exp(x[2]+x[3]);
 }
-Vec proxh(Vec x, Real t){
-    Vec u  = x; 
-    u.segment<10>(0) = L2_BALL_PROXH(x.segment<10>(0),1,t);
-    u.segment<10>(10) = Linf_BALL_PROXH(x.segment<10>(10),1,t);
+Vec gradf(Vec x){
+    Vec u(4);
+    u[0] = x[3]*exp(x[0]*x[3] - x[1]*x[2]);
+    u[1] = -x[2]*exp(x[0]*x[3] - x[1]*x[2]);
+    u[2] = -x[1]*exp(x[0]*x[3] - x[1]*x[2]) + exp(x[2]+x[3]);
+    u[3] = x[0]*exp(x[0]*x[3] - x[1]*x[2]) + exp(x[2]+x[3]);
     return u;
+    
 }
 int main(){
-    Mat A = Mat::Random(20,20);
-    Vec u = Vec::Random(20);
-    cout << u << endl;
-    Vec b = A*u;
-    Vec x = Vec::Zero(20);
-    prox_pair<Vec> my_prox(h,proxh);
-    Problem<Vec> p(LS(A,b),my_prox);
+    Vec lx(4); lx<<0,0,0,0;
+    Vec ux(4); ux<<3,2,2,2;
+    Vec x(4); x<<1,1,1,1;
+    grad_pair<Vec> my_grad(f,gradf);
+    Problem<Vec> p(my_grad,BOX(lx,ux));
     p.mu = 0.0001;
     Options opts(10000, 1e-8, 1e-6, 1e-0, 5e-1);
     opts.setClassical();

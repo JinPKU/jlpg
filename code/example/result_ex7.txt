@@ -1,0 +1,229 @@
+Proximal Gradient Method 
+with ftol = 1e-06  gtol = 0.0001
+In iteration 0, objective function value = 1655.77
+Problem Solved within 1 Iteration(s).
+Function value=1655.77; Optimality measure=0.
+Used Time:0.004615(s)
+Proximal Gradient Method 
+with ftol = 1e-07  gtol = 1e-05
+In iteration 0, objective function value = 1303.68
+In iteration 1, objective function value = 1224.66
+In iteration 2, objective function value = 1194.37
+In iteration 3, objective function value = 1183.63
+In iteration 4, objective function value = 1177.97
+In iteration 5, objective function value = 1171.91
+In iteration 6, objective function value = 1170.38
+In iteration 7, objective function value = 1169.06
+In iteration 8, objective function value = 1168.15
+In iteration 9, objective function value = 1167.58
+In iteration 10, objective function value = 1167.28
+In iteration 11, objective function value = 1166.99
+In iteration 12, objective function value = 1166.83
+In iteration 13, objective function value = 1166.67
+In iteration 14, objective function value = 1166.59
+In iteration 15, objective function value = 1166.53
+In iteration 16, objective function value = 1166.5
+In iteration 17, objective function value = 1166.44
+In iteration 18, objective function value = 1166.41
+In iteration 19, objective function value = 1166.4
+In iteration 20, objective function value = 1166.39
+In iteration 21, objective function value = 1166.36
+In iteration 22, objective function value = 1166.36
+In iteration 23, objective function value = 1166.35
+In iteration 24, objective function value = 1166.35
+In iteration 25, objective function value = 1166.35
+In iteration 26, objective function value = 1166.35
+In iteration 27, objective function value = 1166.35
+In iteration 28, objective function value = 1166.35
+In iteration 29, objective function value = 1166.35
+In iteration 30, objective function value = 1166.35
+In iteration 31, objective function value = 1166.35
+In iteration 32, objective function value = 1166.35
+In iteration 33, objective function value = 1166.35
+In iteration 34, objective function value = 1166.35
+In iteration 35, objective function value = 1166.35
+In iteration 36, objective function value = 1166.35
+In iteration 37, objective function value = 1166.35
+In iteration 38, objective function value = 1166.35
+In iteration 39, objective function value = 1166.35
+In iteration 40, objective function value = 1166.35
+In iteration 41, objective function value = 1166.35
+In iteration 42, objective function value = 1166.35
+In iteration 43, objective function value = 1166.35
+In iteration 44, objective function value = 1166.35
+In iteration 45, objective function value = 1166.35
+In iteration 46, objective function value = 1166.35
+In iteration 47, objective function value = 1166.35
+In iteration 48, objective function value = 1166.35
+Problem Solved within 49 Iteration(s).
+Function value=1166.35; Optimality measure=0.00156988.
+Used Time:0.501196(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 888.127
+In iteration 1, objective function value = 878.577
+In iteration 2, objective function value = 874.352
+In iteration 3, objective function value = 865.812
+In iteration 4, objective function value = 863.951
+In iteration 5, objective function value = 862.761
+In iteration 6, objective function value = 862.187
+In iteration 7, objective function value = 860.432
+In iteration 8, objective function value = 858.831
+In iteration 9, objective function value = 858.471
+In iteration 10, objective function value = 858.35
+In iteration 11, objective function value = 858.298
+In iteration 12, objective function value = 857.927
+In iteration 13, objective function value = 857.888
+In iteration 14, objective function value = 857.874
+In iteration 15, objective function value = 857.866
+In iteration 16, objective function value = 857.86
+In iteration 17, objective function value = 857.844
+In iteration 18, objective function value = 857.839
+In iteration 19, objective function value = 857.836
+In iteration 20, objective function value = 857.833
+In iteration 21, objective function value = 857.826
+In iteration 22, objective function value = 857.824
+In iteration 23, objective function value = 857.822
+In iteration 24, objective function value = 857.82
+In iteration 25, objective function value = 857.818
+In iteration 26, objective function value = 857.817
+In iteration 27, objective function value = 857.815
+In iteration 28, objective function value = 857.815
+In iteration 29, objective function value = 857.814
+In iteration 30, objective function value = 857.813
+In iteration 31, objective function value = 857.81
+In iteration 32, objective function value = 857.81
+In iteration 33, objective function value = 857.81
+In iteration 34, objective function value = 857.81
+In iteration 35, objective function value = 857.809
+In iteration 36, objective function value = 857.809
+In iteration 37, objective function value = 857.808
+In iteration 38, objective function value = 857.808
+In iteration 39, objective function value = 857.808
+In iteration 40, objective function value = 857.808
+In iteration 41, objective function value = 857.808
+In iteration 42, objective function value = 857.808
+In iteration 43, objective function value = 857.808
+In iteration 44, objective function value = 857.808
+In iteration 45, objective function value = 857.808
+In iteration 46, objective function value = 857.808
+In iteration 47, objective function value = 857.808
+In iteration 48, objective function value = 857.808
+In iteration 49, objective function value = 857.808
+In iteration 50, objective function value = 857.808
+In iteration 51, objective function value = 857.808
+In iteration 52, objective function value = 857.808
+In iteration 53, objective function value = 857.808
+In iteration 54, objective function value = 857.808
+In iteration 55, objective function value = 857.808
+In iteration 56, objective function value = 857.808
+In iteration 57, objective function value = 857.808
+In iteration 58, objective function value = 857.808
+In iteration 59, objective function value = 857.808
+In iteration 60, objective function value = 857.808
+In iteration 61, objective function value = 857.808
+In iteration 62, objective function value = 857.808
+In iteration 63, objective function value = 857.808
+In iteration 64, objective function value = 857.808
+In iteration 65, objective function value = 857.808
+In iteration 66, objective function value = 857.808
+In iteration 67, objective function value = 857.808
+In iteration 68, objective function value = 857.808
+In iteration 69, objective function value = 857.808
+In iteration 70, objective function value = 857.808
+In iteration 71, objective function value = 857.808
+Problem Solved within 72 Iteration(s).
+Function value=857.808; Optimality measure=0.000699007.
+Used Time:0.55807(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 819.505
+In iteration 1, objective function value = 819.393
+In iteration 2, objective function value = 819.331
+In iteration 3, objective function value = 819.234
+In iteration 4, objective function value = 819.207
+In iteration 5, objective function value = 819.186
+In iteration 6, objective function value = 819.173
+In iteration 7, objective function value = 819.156
+In iteration 8, objective function value = 819.144
+In iteration 9, objective function value = 819.136
+In iteration 10, objective function value = 819.131
+In iteration 11, objective function value = 819.123
+In iteration 12, objective function value = 819.116
+In iteration 13, objective function value = 819.113
+In iteration 14, objective function value = 819.112
+In iteration 15, objective function value = 819.104
+In iteration 16, objective function value = 819.101
+In iteration 17, objective function value = 819.1
+In iteration 18, objective function value = 819.099
+In iteration 19, objective function value = 819.099
+In iteration 20, objective function value = 819.095
+In iteration 21, objective function value = 819.095
+In iteration 22, objective function value = 819.095
+In iteration 23, objective function value = 819.095
+In iteration 24, objective function value = 819.095
+In iteration 25, objective function value = 819.095
+In iteration 26, objective function value = 819.095
+In iteration 27, objective function value = 819.095
+In iteration 28, objective function value = 819.095
+In iteration 29, objective function value = 819.095
+In iteration 30, objective function value = 819.095
+In iteration 31, objective function value = 819.095
+In iteration 32, objective function value = 819.095
+In iteration 33, objective function value = 819.095
+In iteration 34, objective function value = 819.095
+In iteration 35, objective function value = 819.095
+In iteration 36, objective function value = 819.095
+In iteration 37, objective function value = 819.095
+In iteration 38, objective function value = 819.095
+In iteration 39, objective function value = 819.095
+In iteration 40, objective function value = 819.095
+In iteration 41, objective function value = 819.095
+In iteration 42, objective function value = 819.095
+In iteration 43, objective function value = 819.095
+In iteration 44, objective function value = 819.095
+In iteration 45, objective function value = 819.095
+In iteration 46, objective function value = 819.095
+In iteration 47, objective function value = 819.095
+Problem Solved within 48 Iteration(s).
+Function value=819.095; Optimality measure=0.000981303.
+Used Time:0.427867(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 815.141
+In iteration 1, objective function value = 815.139
+In iteration 2, objective function value = 815.139
+In iteration 3, objective function value = 815.138
+In iteration 4, objective function value = 815.138
+In iteration 5, objective function value = 815.137
+In iteration 6, objective function value = 815.137
+In iteration 7, objective function value = 815.137
+In iteration 8, objective function value = 815.137
+In iteration 9, objective function value = 815.137
+In iteration 10, objective function value = 815.137
+In iteration 11, objective function value = 815.137
+In iteration 12, objective function value = 815.137
+In iteration 13, objective function value = 815.137
+In iteration 14, objective function value = 815.137
+In iteration 15, objective function value = 815.137
+In iteration 16, objective function value = 815.136
+In iteration 17, objective function value = 815.136
+In iteration 18, objective function value = 815.136
+In iteration 19, objective function value = 815.136
+In iteration 20, objective function value = 815.136
+In iteration 21, objective function value = 815.136
+In iteration 22, objective function value = 815.136
+In iteration 23, objective function value = 815.136
+In iteration 24, objective function value = 815.136
+In iteration 25, objective function value = 815.136
+Problem Solved within 26 Iteration(s).
+Function value=815.136; Optimality measure=0.00105519.
+Used Time:0.280008(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 815.136
+Problem Solved within 1 Iteration(s).
+Function value=815.136; Optimality measure=0.000632897.
+Used Time:0.035372(s)
+cputime=1.83697
+f=815.136; nrmG=0.000632897; Flag=1

@@ -1,0 +1,128 @@
+Proximal Gradient Method 
+with ftol = 1e-06  gtol = 0.0001
+In iteration 0, objective function value = 3.75909
+In iteration 1, objective function value = 2.31615
+In iteration 2, objective function value = inf
+In iteration 3, objective function value = inf
+In iteration 4, objective function value = inf
+In iteration 5, objective function value = inf
+In iteration 6, objective function value = inf
+In iteration 7, objective function value = inf
+In iteration 8, objective function value = inf
+In iteration 9, objective function value = inf
+In iteration 10, objective function value = inf
+Problem Solved within 11 Iteration(s).
+Function value=inf; Optimality measure=4.24107e-05.
+Used Time:0.000471(s)
+Proximal Gradient Method 
+with ftol = 1e-07  gtol = 1e-05
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=2.33486e-06.
+Used Time:0.000224(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=1.28555e-07.
+Used Time:0.000236(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=7.07813e-09.
+Used Time:0.000322(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=6.29869e-09.
+Used Time:0.000255(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=1.75089e-08.
+Used Time:6.5e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=9.64025e-10.
+Used Time:0.000215(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = inf
+Problem Solved within 1 Iteration(s).
+Function value=inf; Optimality measure=2.67976e-09.
+Used Time:6.5e-05(s)
+0.882492
+       2
+0.231049
+       0
+cputime=0.010503
+f=inf; nrmG=2.67976e-09; Flag=1
+Proximal Gradient Method 
+with ftol = 1e-06  gtol = 0.0001
+In iteration 0, objective function value = 3.75909
+In iteration 1, objective function value = 2.31615
+In iteration 2, objective function value = 2.01266
+In iteration 3, objective function value = 1.98948
+In iteration 4, objective function value = 1.98658
+In iteration 5, objective function value = 1.96495
+In iteration 6, objective function value = 1.90885
+In iteration 7, objective function value = 1.89356
+In iteration 8, objective function value = 1.88989
+In iteration 9, objective function value = 1.88988
+In iteration 10, objective function value = 1.88988
+Problem Solved within 11 Iteration(s).
+Function value=1.88988; Optimality measure=4.24107e-05.
+Used Time:0.000582(s)
+Proximal Gradient Method 
+with ftol = 1e-07  gtol = 1e-05
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=2.33486e-06.
+Used Time:4.5e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=1.28555e-07.
+Used Time:4.5e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=7.07813e-09.
+Used Time:3.9e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=6.29869e-09.
+Used Time:3.9e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=1.75089e-08.
+Used Time:4.1e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=9.64025e-10.
+Used Time:4e-05(s)
+Proximal Gradient Method 
+with ftol = 1e-08  gtol = 1e-06
+In iteration 0, objective function value = 1.88988
+Problem Solved within 1 Iteration(s).
+Function value=1.88988; Optimality measure=2.67976e-09.
+Used Time:4e-05(s)
+0.882492
+       2
+0.231049
+       0
+cputime=0.003826
+f=1.88988; nrmG=2.67976e-09; Flag=1
