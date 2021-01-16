@@ -12,4 +12,8 @@
 #ifndef __SOLVER_HPP__
 #include "solver.hpp"
 #endif 
+
+#ifndef __CONTINUATION_HPP__
+#include "continuation.hpp"
+#endif
 #endif  /* __JLPG_HPP__ */
