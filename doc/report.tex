@@ -482,6 +482,35 @@ bottom=2.5cm]{geometry}
     \label{tab2}
   \end{table}
 
+  \begin{example}\label{exp3}
+%    In this numerical example, we test the group LASSO problem.
+%    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
+%    \co{L12\_NORM}, respectively. Let the elements of $A \in \mr^{m 
+%      \times n}$ and $u \in \mr^{n \times l}$ be uniformly random 
+%    numbers from $[0,1]$. Let $b = Au$. We take $m = 128$, $n = 256$ 
+%    and $l = 2$. The initial value is $x^0 = 0$. Let $\mu = 0.01$. 
+%We 
+%    use continuation strategy and compare between three 
+%    types of line search methods. The numerical results are 
+%presented 
+%    in \cref{tab3}.
+  \end{example}
+  
+  \begin{table}[p]
+    \centering
+    \begin{tabular}{cc|ccccc}
+      \hline
+      type & cont. & iters & cputime & 
+      fval & optimality & flag \\ \hline
+      Armijo & 1 & 36 & 0.0625 & 2596.97 & 0.063954 & 1 \\
+      Nonmonotone & 1 & 36 & 0.046875 & 2596.97 & 0.0466814 & 1 \\
+      Classical & 1 & 47 & 0.046875 & 2596.97 & 0.000236843 & 1 \\
+      \hline
+    \end{tabular}
+    \caption{Numerical results for \cref{exp3}.}
+    \label{tab3}
+  \end{table}
+
   
   
   
