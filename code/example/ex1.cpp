@@ -1,4 +1,4 @@
-// constructing a blocked proximal problem
+// Lasso problem
 
 #include <iostream>
 #include <eigen3/Eigen/Dense>
