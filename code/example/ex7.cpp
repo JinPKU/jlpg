@@ -2,7 +2,6 @@
 #include <iostream>
 #include <eigen3/Eigen/Dense>
 #include "jlpg.hpp"
-#include "continuation.hpp"
 #include <cmath>
 using namespace std;
 
