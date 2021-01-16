@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(){
-    int m = 512, n = 256;
+    int m = 20, n = 20;
     Mat A = Mat::Random(m, n);
     Vec u = Vec::Random(n);
     Vec b = A * u;
