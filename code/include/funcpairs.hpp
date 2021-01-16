@@ -315,7 +315,7 @@ prox_pair<Vec> Linf_BALL(Real R){
 
 // simple box
 Real BOX_H(Vec x, Vec lx, Vec ux){
-    return (x.array()>lx.array()).all() && (x.array()<ux.array()).all()?0:inf;
+    return (x.array()>=lx.array()).all() && (x.array()<=ux.array()).all()?0:inf;
 }
 Vec BOX_PROXH(Vec x, Vec lx, Vec ux){
     return x.cwiseMax(lx).cwiseMin(ux);

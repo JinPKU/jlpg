@@ -1,4 +1,4 @@
-// logistic regression with sparsity 
+// blocked norm ball constraint LS
 #include <iostream>
 #include <eigen3/Eigen/Dense>
 #include "jlpg.hpp"
