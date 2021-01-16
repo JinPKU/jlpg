@@ -425,11 +425,22 @@ bottom=2.5cm]{geometry}
   \section{Numerical experiments}
   \label{sec:num}
   
+  
+  
+  
   \begin{example}\label{exp1}
-    
+    In this numerical example, we test the classical LASSO problem.
+    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
+    \co{L1\_NORM}, respectively. Let the elements of $A \in \mr^{m 
+    \times n}$ and $u \in \mr^n$ be uniformly random numbers from 
+    $[0,1]$. Let $b = Au$. We take $m = 256$ and $n = 512$. The 
+    initial value is $x^0 = 0$. Let $\mu = 0.01$. We use continuation 
+    strategy and compare between three 
+    types of line search methods. The numerical results are presented 
+    in \cref{tab1}.
   \end{example}
   
-  \begin{table}
+  \begin{table}[p]
     \centering
     \begin{tabular}{cc|ccccc}
       \hline
@@ -441,7 +452,37 @@ bottom=2.5cm]{geometry}
       \hline
     \end{tabular}
     \caption{Numerical results for \cref{exp1}.}
+    \label{tab1}
   \end{table}
+
+  \begin{example}\label{exp2}
+    In this numerical example, we test the group LASSO problem.
+    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
+    \co{L12\_NORM}, respectively. Let the elements of $A \in \mr^{m 
+    \times n}$ and $u \in \mr^{n \times l}$ be uniformly random 
+    numbers from $[0,1]$. Let $b = Au$. We take $m = 128$, $n = 256$ 
+    and $l = 2$. The initial value is $x^0 = 0$. Let $\mu = 0.01$. We 
+    use continuation strategy and compare between three 
+    types of line search methods. The numerical results are presented 
+    in \cref{tab2}.
+  \end{example}
+  
+  \begin{table}[p]
+    \centering
+    \begin{tabular}{cc|ccccc}
+      \hline
+      type & cont. & iters & cputime & 
+      fval & optimality & flag \\ \hline
+      Armijo & 1 & 198 & 0.3125 & 0.178611 & 0.0218023 & 1 \\
+      Nonmonotone & 1 & 327 & 0.28125 & 0.173687 & 0.000139197 & 1 \\
+      Classical & 1 & 334 & 0.28125 & 0.173687 & 5.51511e-05 & 1 \\
+      \hline
+    \end{tabular}
+    \caption{Numerical results for \cref{exp2}.}
+    \label{tab2}
+  \end{table}
+
+  
   
   
   
