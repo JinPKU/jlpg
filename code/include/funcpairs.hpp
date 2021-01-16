@@ -250,19 +250,23 @@ prox_pair<Vec> L0_BALL(Real R){
 
 // L1 ball 
 Real L1_BALL_H(Vec x, Real R){
-return x.lpNorm<1>()<R?0:inf;
+return x.lpNorm<1>()<=R?0:inf;
 }
 
 Vec L1_BALL_PROXH(Vec x, Real R, Real t){
-    if(x.lpNorm<1>()<=R) return x;
+    if (x.lpNorm<1>() <= R) return x;
     Vec u = x.array().abs();
     int sz = x.size();
     std::sort(u.data(),u.data()+u.size(),std::greater<Real>());
-    double R0 = 0;
-    int i = 0;
-    for(i = 0 ; i <sz; i++){R0+=(i+1)*(u[i]-u[i+1]); if(R0>R) break;}
-    double th = (R0-R)/(i+1) + u[i+1];
-    return (x.array().sign())*(x.array() - th).max(0);
+    double R0 = 0, R0_new;
+    int i;
+    for(i = 1 ; i < sz; ++i) {
+        R0_new = R0 + i * (u[i-1]-u[i]);
+        if(R0_new >= R) break;
+        R0 = R0_new;
+    }
+    double th = (R0 - R) / double(i) + u[i-1];
+    return (x.array().sign())*(x.array().abs() - th).max(0);
 }
 
 prox_pair<Vec> L1_BALL(Real R){
