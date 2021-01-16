@@ -1,0 +1,215 @@
+time elasped: 1.00454
+Recommedation of JESTER dataset
+Proximal Gradient Method 
+with ftol = 10  gtol = 10
+In iteration 0, objective function value = 3.49808e+07
+In iteration 1, objective function value = 3.45571e+07
+In iteration 2, objective function value = 3.41389e+07
+In iteration 3, objective function value = 2.67168e+07
+In iteration 4, objective function value = 2.35932e+07
+In iteration 5, objective function value = 2.3232e+07
+In iteration 6, objective function value = 2.29179e+07
+In iteration 7, objective function value = 2.01546e+07
+In iteration 8, objective function value = 1.94414e+07
+In iteration 9, objective function value = 1.92655e+07
+In iteration 10, objective function value = 1.91322e+07
+In iteration 11, objective function value = 1.82184e+07
+In iteration 12, objective function value = 1.80219e+07
+In iteration 13, objective function value = 1.78905e+07
+In iteration 14, objective function value = 1.78111e+07
+In iteration 15, objective function value = 1.69084e+07
+In iteration 16, objective function value = 1.63857e+07
+In iteration 17, objective function value = 1.63222e+07
+In iteration 18, objective function value = 1.62751e+07
+In iteration 19, objective function value = 1.56131e+07
+In iteration 20, objective function value = 1.54851e+07
+In iteration 21, objective function value = 1.54401e+07
+In iteration 22, objective function value = 1.54104e+07
+In iteration 23, objective function value = 1.48869e+07
+In iteration 24, objective function value = 1.47241e+07
+In iteration 25, objective function value = 1.46841e+07
+In iteration 26, objective function value = 1.4664e+07
+In iteration 27, objective function value = 1.44181e+07
+In iteration 28, objective function value = 1.43699e+07
+In iteration 29, objective function value = 1.43364e+07
+In iteration 30, objective function value = 1.43227e+07
+In iteration 31, objective function value = 1.40739e+07
+In iteration 32, objective function value = 1.3979e+07
+In iteration 33, objective function value = 1.39478e+07
+In iteration 34, objective function value = 1.39355e+07
+In iteration 35, objective function value = 1.38503e+07
+In iteration 36, objective function value = 1.38309e+07
+In iteration 37, objective function value = 1.38069e+07
+In iteration 38, objective function value = 1.37992e+07
+In iteration 39, objective function value = 1.35868e+07
+In iteration 40, objective function value = 1.35384e+07
+In iteration 41, objective function value = 1.35254e+07
+In iteration 42, objective function value = 1.35185e+07
+In iteration 43, objective function value = 1.34542e+07
+In iteration 44, objective function value = 1.34402e+07
+In iteration 45, objective function value = 1.34256e+07
+In iteration 46, objective function value = 1.34206e+07
+In iteration 47, objective function value = 1.33081e+07
+In iteration 48, objective function value = 1.32815e+07
+In iteration 49, objective function value = 1.32681e+07
+In iteration 50, objective function value = 1.32627e+07
+In iteration 51, objective function value = 1.32261e+07
+In iteration 52, objective function value = 1.32177e+07
+In iteration 53, objective function value = 1.32054e+07
+In iteration 54, objective function value = 1.32017e+07
+In iteration 55, objective function value = 1.31187e+07
+In iteration 56, objective function value = 1.31049e+07
+In iteration 57, objective function value = 1.30945e+07
+In iteration 58, objective function value = 1.30909e+07
+In iteration 59, objective function value = 1.3059e+07
+In iteration 60, objective function value = 1.30533e+07
+In iteration 61, objective function value = 1.30428e+07
+In iteration 62, objective function value = 1.304e+07
+In iteration 63, objective function value = 1.29686e+07
+In iteration 64, objective function value = 1.29556e+07
+In iteration 65, objective function value = 1.29471e+07
+In iteration 66, objective function value = 1.2944e+07
+In iteration 67, objective function value = 1.29215e+07
+In iteration 68, objective function value = 1.29174e+07
+In iteration 69, objective function value = 1.2906e+07
+In iteration 70, objective function value = 1.29039e+07
+In iteration 71, objective function value = 1.28115e+07
+In iteration 72, objective function value = 1.27782e+07
+In iteration 73, objective function value = 1.27746e+07
+In iteration 74, objective function value = 1.27725e+07
+In iteration 75, objective function value = 1.27515e+07
+In iteration 76, objective function value = 1.27479e+07
+In iteration 77, objective function value = 1.27399e+07
+In iteration 78, objective function value = 1.27382e+07
+In iteration 79, objective function value = 1.2707e+07
+In iteration 80, objective function value = 1.27043e+07
+In iteration 81, objective function value = 1.27e+07
+In iteration 82, objective function value = 1.26985e+07
+In iteration 83, objective function value = 1.26437e+07
+In iteration 84, objective function value = 1.26377e+07
+In iteration 85, objective function value = 1.26356e+07
+In iteration 86, objective function value = 1.26342e+07
+In iteration 87, objective function value = 1.25841e+07
+In iteration 88, objective function value = 1.25718e+07
+In iteration 89, objective function value = 1.25667e+07
+In iteration 90, objective function value = 1.25648e+07
+In iteration 91, objective function value = 1.25559e+07
+In iteration 92, objective function value = 1.25543e+07
+In iteration 93, objective function value = 1.25463e+07
+In iteration 94, objective function value = 1.25448e+07
+In iteration 95, objective function value = 1.25364e+07
+In iteration 96, objective function value = 1.25349e+07
+In iteration 97, objective function value = 1.25276e+07
+In iteration 98, objective function value = 1.25262e+07
+In iteration 99, objective function value = 1.25186e+07
+In iteration 100, objective function value = 1.25173e+07
+In iteration 101, objective function value = 1.25107e+07
+In iteration 102, objective function value = 1.25095e+07
+In iteration 103, objective function value = 1.25025e+07
+In iteration 104, objective function value = 1.25012e+07
+In iteration 105, objective function value = 1.24956e+07
+In iteration 106, objective function value = 1.24945e+07
+In iteration 107, objective function value = 1.2488e+07
+In iteration 108, objective function value = 1.24868e+07
+In iteration 109, objective function value = 1.24818e+07
+In iteration 110, objective function value = 1.24808e+07
+In iteration 111, objective function value = 1.24746e+07
+In iteration 112, objective function value = 1.24734e+07
+In iteration 113, objective function value = 1.24689e+07
+In iteration 114, objective function value = 1.24679e+07
+In iteration 115, objective function value = 1.2462e+07
+In iteration 116, objective function value = 1.24609e+07
+In iteration 117, objective function value = 1.24567e+07
+In iteration 118, objective function value = 1.24557e+07
+In iteration 119, objective function value = 1.24501e+07
+In iteration 120, objective function value = 1.2449e+07
+In iteration 121, objective function value = 1.2445e+07
+In iteration 122, objective function value = 1.2444e+07
+In iteration 123, objective function value = 1.24387e+07
+In iteration 124, objective function value = 1.24376e+07
+In iteration 125, objective function value = 1.24338e+07
+In iteration 126, objective function value = 1.24329e+07
+In iteration 127, objective function value = 1.24278e+07
+In iteration 128, objective function value = 1.24267e+07
+In iteration 129, objective function value = 1.24231e+07
+In iteration 130, objective function value = 1.24222e+07
+In iteration 131, objective function value = 1.24173e+07
+In iteration 132, objective function value = 1.24163e+07
+In iteration 133, objective function value = 1.24128e+07
+In iteration 134, objective function value = 1.24119e+07
+In iteration 135, objective function value = 1.24072e+07
+In iteration 136, objective function value = 1.24062e+07
+In iteration 137, objective function value = 1.24028e+07
+In iteration 138, objective function value = 1.2402e+07
+In iteration 139, objective function value = 1.23975e+07
+In iteration 140, objective function value = 1.23966e+07
+In iteration 141, objective function value = 1.23933e+07
+In iteration 142, objective function value = 1.23924e+07
+In iteration 143, objective function value = 1.23881e+07
+In iteration 144, objective function value = 1.23872e+07
+In iteration 145, objective function value = 1.2384e+07
+In iteration 146, objective function value = 1.23832e+07
+In iteration 147, objective function value = 1.23791e+07
+In iteration 148, objective function value = 1.23783e+07
+In iteration 149, objective function value = 1.23751e+07
+In iteration 150, objective function value = 1.23743e+07
+In iteration 151, objective function value = 1.23704e+07
+In iteration 152, objective function value = 1.23696e+07
+In iteration 153, objective function value = 1.23665e+07
+In iteration 154, objective function value = 1.23657e+07
+In iteration 155, objective function value = 1.2362e+07
+In iteration 156, objective function value = 1.23612e+07
+In iteration 157, objective function value = 1.23582e+07
+In iteration 158, objective function value = 1.23574e+07
+In iteration 159, objective function value = 1.23538e+07
+In iteration 160, objective function value = 1.2353e+07
+In iteration 161, objective function value = 1.23501e+07
+In iteration 162, objective function value = 1.23494e+07
+In iteration 163, objective function value = 1.23459e+07
+In iteration 164, objective function value = 1.23452e+07
+In iteration 165, objective function value = 1.23423e+07
+time elasped: 0.897112
+Recommedation of JESTER dataset
+Proximal Gradient Method 
+with ftol = 1000  gtol = 1000
+In iteration 0, objective function value = 337078
+Problem Solved within 1 Iteration(s).
+Function value=337078; Optimality measure=0.
+Used Time:1.80936(s)
+Proximal Gradient Method 
+with ftol = 100  gtol = 100
+In iteration 0, objective function value = 337078
+Problem Solved within 1 Iteration(s).
+Function value=337078; Optimality measure=0.
+Used Time:1.64095(s)
+cputime=5.79035
+f=337078; nrmG=0; Flag=1
+time elasped: 1.06938
+Recommedation of JESTER dataset
+Proximal Gradient Method 
+with ftol = 1000  gtol = 1000
+In iteration 0, objective function value = 3.33059e+07
+Problem Solved within 1 Iteration(s).
+Function value=3.33059e+07; Optimality measure=629.711.
+Used Time:2.01119(s)
+Proximal Gradient Method 
+with ftol = 100  gtol = 100
+In iteration 0, objective function value = 3.26373e+07
+In iteration 1, objective function value = 2.89863e+06
+Problem Solved within 2 Iteration(s).
+Function value=2.89863e+06; Optimality measure=63.857.
+Used Time:2.85425(s)
+Proximal Gradient Method 
+with ftol = 10  gtol = 10
+In iteration 0, objective function value = 2.89455e+06
+In iteration 1, objective function value = 1.60411e+06
+In iteration 2, objective function value = 1.49884e+06
+In iteration 3, objective function value = 1.43128e+06
+In iteration 4, objective function value = 1.40626e+06
+In iteration 5, objective function value = 1.3228e+06
+In iteration 6, objective function value = 1.31033e+06
+Problem Solved within 7 Iteration(s).
+Function value=1.31033e+06; Optimality measure=9.57648.
+Used Time:13.1751(s)
+cputime=21.0265
+f=1.31033e+06; nrmG=9.57648; Flag=1

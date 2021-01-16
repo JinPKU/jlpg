@@ -31,7 +31,7 @@ Real masked_Frob(Mat X, Mat A){
             if(A(i,j)>20) res+=(X(i,j)-A(i,j))*(X(i,j)-A(i,j));
         }
     }
-    return res*0.5;
+    return res*5e-3;
 }
 Mat masked_Frob_grad(Mat X, Mat A){
     int Arow = A.rows(), Acol = A.cols();
@@ -41,7 +41,7 @@ Mat masked_Frob_grad(Mat X, Mat A){
             if(A(i,j)>20) U(i,j) = X(i,j) - A(i,j);
         }
     }
-    return U;
+    return U*1e-2;
 }
 int main(){
     clock_t  Tstart, Tend;
@@ -54,7 +54,7 @@ int main(){
     grad_pair<Mat> mc(bind(masked_Frob, placeholders::_1, A), bind(masked_Frob_grad, placeholders::_1, A));
     Problem<Mat> p(mc, NUCLEAR_NORM);
     p.mu = 10; 
-    Options opts(10000, 1e-1, 1e-1, 1e-0, 5e-1);
+    Options opts(10000, 10, 10, 1e-0, 5e-1);
     opts.setClassical();
     ContOptions con_opts(opts, 10, 0.1, 100, 1e2, 1e2, 1e-1, 1e-1);
 
