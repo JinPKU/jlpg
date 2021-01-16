@@ -4,6 +4,8 @@
 #include "jlpg.hpp"
 using namespace Eigen;
 using namespace std;
+
+// load_csv function refers from https://stackoverflow.com/questions/34247057/how-to-read-csv-file-and-assign-to-eigen-matrix
 template<typename M>
 M load_csv (const std::string & path) {
     std::ifstream indata;
