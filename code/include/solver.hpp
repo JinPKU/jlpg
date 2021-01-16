@@ -95,10 +95,10 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 
 	if (opts.rule == Nonmonotone) {
 		f_hist = vector<Real>(opts.M, ninf);
-		for (int j = 0; j< opts.M; ++j) {
-			printf("%e ", f_hist[j]);
-		}
-		printf("\n");
+		// for (int j = 0; j< opts.M; ++j) {
+		// 	printf("%e ", f_hist[j]);
+		// }
+		// printf("\n");
 	}
 
     for( iter = 0; iter < opts.maxiter; ++iter ){

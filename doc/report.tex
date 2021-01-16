@@ -27,8 +27,9 @@
 \usepackage[a4paper,left=2.5cm, right=2.5cm, top=2.5cm, 
 bottom=2.5cm]{geometry}
 \usepackage{xeCJK}
+\usepackage{cleveref}
 
-%\newfontfamily{\con}{Consolas} 
+\newfontfamily{\con}{Consolas} 
 
 %\lstset{language=Matlab}
 
@@ -52,6 +53,7 @@ bottom=2.5cm]{geometry}
 \newcommand{\mi}{\mathbf{1}}
 \newcommand{\diag}{\mathrm{diag}}
 \newcommand{\rank}{\mathrm{rank}}
+\newcommand{\co}[1]{{\con{#1}}}
 
 %\graphicspath{{../figures/}}
 
@@ -78,14 +80,27 @@ bottom=2.5cm]{geometry}
   parameter.
   The proximal operator of $\mu h(x)$ is defined as
   \begin{displaymath}
-    \prox_{\mu h}(x) = \mathop{\arg\min}\limits_{u} \mu h(u) + \frac{1}{2} \norm{u - x}^2.
+    \prox_{\mu h}(x) = \mathop{\arg\min}\limits_{u} \mu h(u) + 
+    \frac{1}{2} \norm{u - x}^2.
   \end{displaymath}
   Starting from a suitable initial point $x^0$, the proximal gradient 
   method is performed as
-  \begin{displaymath}
+  \begin{equation}\label{equ:pg}
     x^{k+1} = \prox_{t_k h} (x^k - t_k \nabla f(x^k)),
-  \end{displaymath}
+  \end{equation}
   where $t_k$ is a chosen step size.
+  
+  Our contributions are listed as follows:
+  \begin{itemize}
+    \item 
+  \end{itemize}
+
+  The rest of this report is organized as follows. In \cref{sec:alg}, 
+  we introduce some details of our algorithms. In \cref{sec:cal}, we 
+  present several typical scenarios of $f(x)$ and $h(x)$. In 
+  \cref{sec:num}, we conduct several numerical experiments. Detailed 
+  description of the design of the packages are presented in 
+  \cref{app:design}.
   
   
   
@@ -94,7 +109,61 @@ bottom=2.5cm]{geometry}
   \label{sec:alg}
   
   \subsection{Strategies for choosing the step size}
-  
+  In \cref{sec:intro}, we have already given the basic frame of the 
+  proximal gradient method. One may notice from \cref{equ:pg} that we 
+  need to determine the step size $t_k$ at each step. In our 
+  implementations, the following four types of strategies for 
+  choosing the step size are supported.
+  \begin{itemize}
+    \item \co{Constant}: constant step size: $t_k = t_0, \ \forall k 
+    \in \mathbb{N}$.
+    \item \co{Armijo}: backtracking line search to achieve the Armijo 
+    condition. The step size $t_k$ is chosen such that
+    \begin{displaymath}
+      f(x^{k+1}) \le f(x^k) + \rho \ip{\nabla f(x^k)}{x^{k+1} - x^k},
+    \end{displaymath}
+    where $\rho \in (0, 1)$ is given beforehand.
+    \item \co{Nonmonotone}: backtracking line search to achieve a 
+    non-monotone condition using the BB step size. The step size 
+    $t_k$ is chosen such that 
+    \begin{displaymath}
+      f(x^{k+1}) \le \max\left\{
+      f(x^j) : j = \max\{0, k-M+1\},\ldots,k \right\} + \rho 
+      \ip{\nabla f(x^k)}{x^{k+1} - x^k},
+    \end{displaymath}
+    where $\rho \in (0, 1)$ and $M > 0$ are given beforehand.
+    \item \co{Classical}: a classical backtracking line search 
+    strategy to choose the step size in the proximal gradient method. 
+    The step size $t_k$ is chosen such that 
+    \begin{displaymath}
+      f(x^{k+1}) \le f(x^k) + \ip{\nabla f(x^k)}{x^{k+1}- x^k} + 
+      \frac{1}{2t_k} \norm{x^{k+1} - x^k}^2.
+    \end{displaymath}
+  \end{itemize}
+  For the last three strategies, we use the we adopt the Armijo 
+  backtracking method and adopt BB rule to determine the initial 
+  guess of the step size. 
+
+  \subsection{Continuation strategy}
+  Later, we may use the continuation strategy.
+  The basic scheme of this strategy is presented in Algorithm 
+  \ref{alg:cont}. This strategy may improve efficiency for some 
+  particular types of $h(x)$.
+  \begin{algorithm}[h]
+    \caption{Continuation strategy.}
+    \label{alg:cont}
+    \LinesNumbered
+    Given the factor $\eta \in (0,1)$, the initial value $\mu_0$ and 
+    the starting point $x_0$. Let $t \leftarrow 0$.\\
+    \While{$\mu_t \ne \mu$ or {the stopping criteria are not 
+        satisfied}}{
+      Solve the group LASSO problem with parameter $\mu_t$ and 
+      initial 
+      value $x_t$, and obtain the optimal point $x_{t+1}$.\\
+      $\mu_{t + 1} \leftarrow \max\{\eta \mu_t, \mu\}$.\\
+      $t \leftarrow t + 1$.
+    }
+  \end{algorithm}
   
   
   
@@ -134,7 +203,7 @@ bottom=2.5cm]{geometry}
       x)),
     \end{displaymath}
     where $x \in \mr^n$, $A = (a_1, \ldots, a_m) \in \mr^{n \times 
-    m}$, 
+      m}$, 
     $a_i = (a_{1,i}, \ldots, a_{n,i})^T \in \mr^n$,
     $b = (b_1, \ldots, b_m)^T \in \mr^m$. The gradient of $f(x)$ is 
     given 
@@ -272,13 +341,13 @@ bottom=2.5cm]{geometry}
     \begin{displaymath}
       \prox_{\mu h}(x) = U D V^T.
     \end{displaymath}
-  
+    
     \item {Elastic-net:} $h(x) = \norm{x}_1 + \frac{\lambda}{2} 
     \norm{x}_2^2$, where $x \in \mr^n$. The proximal operator of $\mu 
     h(x)$ is given by
     \begin{displaymath}
       (\prox_{\mu h}(x))_i =  \frac{\sign(y_i) \; \max\{ |y_i| - \mu, 
-      0 
+        0 
         \}}{1 + \lambda \mu}.
     \end{displaymath}
     
@@ -329,7 +398,7 @@ bottom=2.5cm]{geometry}
     \end{displaymath}
     
     \item {Indicator of rank ball:} $h(x) = \mi_{\rank(\cdot) \le 
-    R}$, 
+      R}$, 
     where $x \in \mr^{m \times n}$ and $R$ is a positive integer. Let 
     the SVD of $x$ be $x = U \Sigma V^T$, where $\Sigma = 
     \diag_{m,n}\left\{ \sigma_1, \ldots, \sigma_r \right\}$. Let 
@@ -363,9 +432,12 @@ bottom=2.5cm]{geometry}
   %\bibliography{ref}
   
   
-  %\appendix
-  %\renewcommand{\appendixname}{Appendix~\Alph{section}}
-  %
+  \appendix
+  \renewcommand{\appendixname}{Appendix~\Alph{section}}
+  
   %\newpage
+  
+  \section{Design of the packages}
+  \label{app:design}
   
 \end{document}
