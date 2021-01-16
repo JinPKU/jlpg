@@ -425,6 +425,23 @@ bottom=2.5cm]{geometry}
   \section{Numerical experiments}
   \label{sec:num}
   
+  \begin{example}\label{exp1}
+    
+  \end{example}
+  
+  \begin{table}
+    \centering
+    \begin{tabular}{cc|ccccc}
+      \hline
+      type & cont. & iters & cputime & 
+      fval & optimality & flag \\ \hline
+      Armijo & 1 & 135 & 0.09375 & 0.223574 & 0.00367652 & 1 \\
+      Nonmonotone & 1 & 114 & 0.046875 & 0.223573 & 2.34637e-05 & 1 \\
+      Classical & 1 & 109 & 0.046875 & 0.223573 & 3.50546e-05 & 1 \\
+      \hline
+    \end{tabular}
+    \caption{Numerical results for \cref{exp1}.}
+  \end{table}
   
   
   

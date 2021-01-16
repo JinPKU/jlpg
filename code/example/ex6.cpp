@@ -1,8 +1,7 @@
 // simple box constrainted optimization.
 #include <iostream>
 #include <eigen3/Eigen/Dense>
-#include "jlpg.hpp"
-#include "continuation.hpp"
+#include "../include/jlpg.hpp"
 #include <cmath>
 using namespace std;
 
