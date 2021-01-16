@@ -1,0 +1,88 @@
+time elasped: 0.024724
+Recommedation of JESTER dataset
+Proximal Gradient Method 
+with ftol = 100  gtol = 100
+In iteration 0, objective function value = 6.92448e+06
+In iteration 1, objective function value = 6.5067e+06
+In iteration 2, objective function value = 6.11e+06
+In iteration 3, objective function value = 4.13213e+06
+In iteration 4, objective function value = 3.53239e+06
+In iteration 5, objective function value = 3.44837e+06
+In iteration 6, objective function value = 3.39179e+06
+In iteration 7, objective function value = 3.10096e+06
+In iteration 8, objective function value = 3.02219e+06
+In iteration 9, objective function value = 2.98679e+06
+In iteration 10, objective function value = 2.96845e+06
+In iteration 11, objective function value = 2.80974e+06
+In iteration 12, objective function value = 2.78442e+06
+Problem Solved within 13 Iteration(s).
+Function value=2.78442e+06; Optimality measure=95.985.
+Used Time:1.06666(s)
+Proximal Gradient Method 
+with ftol = 10  gtol = 10
+In iteration 0, objective function value = 299839
+In iteration 1, objective function value = 299053
+In iteration 2, objective function value = 298462
+In iteration 3, objective function value = 295948
+In iteration 4, objective function value = 294948
+In iteration 5, objective function value = 294642
+In iteration 6, objective function value = 294428
+In iteration 7, objective function value = 292132
+In iteration 8, objective function value = 290776
+In iteration 9, objective function value = 290529
+In iteration 10, objective function value = 290394
+In iteration 11, objective function value = 288420
+In iteration 12, objective function value = 287978
+In iteration 13, objective function value = 287777
+In iteration 14, objective function value = 287673
+Problem Solved within 15 Iteration(s).
+Function value=287673; Optimality measure=9.84578.
+Used Time:0.863348(s)
+Proximal Gradient Method 
+with ftol = 1  gtol = 1
+In iteration 0, objective function value = 29056.1
+In iteration 1, objective function value = 29051.6
+In iteration 2, objective function value = 29048.3
+In iteration 3, objective function value = 29032.6
+In iteration 4, objective function value = 29028.6
+In iteration 5, objective function value = 29025.5
+In iteration 6, objective function value = 29023.7
+In iteration 7, objective function value = 28995.4
+In iteration 8, objective function value = 28986.3
+In iteration 9, objective function value = 28984.6
+In iteration 10, objective function value = 28983.3
+In iteration 11, objective function value = 28954.2
+In iteration 12, objective function value = 28949.2
+In iteration 13, objective function value = 28947.2
+In iteration 14, objective function value = 28946
+In iteration 15, objective function value = 28922.9
+In iteration 16, objective function value = 28916
+In iteration 17, objective function value = 28913.6
+In iteration 18, objective function value = 28912.3
+In iteration 19, objective function value = 28901.2
+In iteration 20, objective function value = 28898.8
+In iteration 21, objective function value = 28896.5
+In iteration 22, objective function value = 28895.5
+Problem Solved within 23 Iteration(s).
+Function value=28895.5; Optimality measure=0.98391.
+Used Time:2.04332(s)
+Proximal Gradient Method 
+with ftol = 1  gtol = 1
+In iteration 0, objective function value = 2892.62
+Problem Solved within 1 Iteration(s).
+Function value=2892.62; Optimality measure=0.194524.
+Used Time:0.063677(s)
+Proximal Gradient Method 
+with ftol = 1  gtol = 1
+In iteration 0, objective function value = 289.296
+Problem Solved within 1 Iteration(s).
+Function value=289.296; Optimality measure=0.0290634.
+Used Time:0.068326(s)
+Proximal Gradient Method 
+with ftol = 1  gtol = 1
+In iteration 0, objective function value = 289.295
+Problem Solved within 1 Iteration(s).
+Function value=289.295; Optimality measure=0.0275082.
+Used Time:0.067486(s)
+cputime=4.42212
+f=289.295; nrmG=0.0275082; Flag=1

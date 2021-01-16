@@ -54,7 +54,7 @@ int main(){
     grad_pair<Mat> mc(bind(masked_Frob, placeholders::_1, A), bind(masked_Frob_grad, placeholders::_1, A));
     Problem<Mat> p(mc, NUCLEAR_NORM);
     p.mu = 0.01; 
-    Options opts(10000, 1e-4, 1e-2, 1e-0, 5e-1);
+    Options opts(10000, 1, 1, 1e-0, 5e-1);
     opts.setClassical();
     ContOptions con_opts(opts, 10, 0.1, 100, 1e2, 1e2, 1e-1, 1e-1);
 
