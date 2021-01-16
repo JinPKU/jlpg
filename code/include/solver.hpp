@@ -25,6 +25,7 @@ struct Options{
 	StepSizeRule rule;
 
 	bool LineSearchEnabled, BBMethodEnabled;
+	// bool ContinuationEnabled;
 
 	// for BB method:
 	int M;
@@ -72,7 +73,7 @@ struct Outputs{
 template <typename T>
 T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 #if VERBOSED
-    cout << "Proximal Gradient Method " << endl;
+    cout << "## Proximal Gradient Method " << endl;
 	cout << "with ftol = " << opts.ftol << "  gtol = " << opts.gtol << endl;
 #endif
 	Real F_prev, f_prev;	// F = f + h
@@ -95,10 +96,6 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 
 	if (opts.rule == Nonmonotone) {
 		f_hist = vector<Real>(opts.M, ninf);
-		// for (int j = 0; j< opts.M; ++j) {
-		// 	printf("%e ", f_hist[j]);
-		// }
-		// printf("\n");
 	}
 
     for( iter = 0; iter < opts.maxiter; ++iter ){
@@ -113,7 +110,7 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 		x_prev = x;
 
         x = p.proxh(x_prev - alpha * g_prev, alpha * p.mu);
-		if (opts.BBMethodEnabled) {
+		if (opts.LineSearchEnabled) {
 			nls = 0;
 			lsFlag = true;
 			while (true) {
@@ -130,6 +127,9 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 
 					case Classical:
 					if (tmp <= f_prev + (g_prev.array()*(x - x_prev).array()).sum() + .5 / alpha * (x - x_prev).squaredNorm()) lsFlag = false;
+					break;
+
+					case Constant:
 					break;
 				}
 
@@ -148,14 +148,14 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 			F_cur = p.value(x);
 		}
 		
-#if VERBOSED
-    cout << "In iteration " << iter << ", objective function value = "<< F_cur << endl;
-#endif
-		
 		g_cur = p.gradf(x);
 		nrmG = (x - p.proxh(x - g_cur, p.mu)).norm();
 
-		if (opts.BBMethodEnabled && opts.BBMethodEnabled) {
+#if VERBOSED
+    cout << "In iteration " << iter << ", function value = "<< F_cur << ", optimality = " << nrmG << endl;
+#endif
+
+		if (opts.LineSearchEnabled && opts.BBMethodEnabled) {
 			dx = x - x_prev;
 			dg = g_cur - g_prev;
 			dxg = abs(dx.array()*dg.array()).sum();
@@ -183,7 +183,7 @@ T pgm(Problem<T> p, T x, Options opts, Outputs& output){
 	Real during = (double)(Tend - Tstart)/CLOCKS_PER_SEC;
 #if VERBOSED
     cout << "Problem Solved within " << iter+1 << " Iteration(s)." << endl;
-	cout << "Function value=" << F_cur << "; Optimality measure=" << nrmG << "." << endl;
+	cout << "function value = " << F_cur << "; optimality = " << nrmG << "." << endl;
 	cout << "Used Time:" << during << "(s)" << endl;
 #endif
 	output.iter = iter;

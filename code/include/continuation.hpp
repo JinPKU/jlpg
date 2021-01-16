@@ -12,11 +12,11 @@
 using namespace std;
 
 struct ContOptions{
-	Options opts;
+	const Options &opts;
 	int maxiter_out;
 	Real factor, mu1, ftol_init, gtol_init, etaf, etag;
 
-	ContOptions(Options opts, int maxiter_out, Real factor, Real mu1, Real ftol_init, Real gtol_init, Real etaf, Real etag):
+	ContOptions(const Options &opts, int maxiter_out, Real factor, Real mu1, Real ftol_init, Real gtol_init, Real etaf, Real etag):
 		opts(opts), maxiter_out(maxiter_out), factor(factor), mu1(mu1), ftol_init(ftol_init), gtol_init(gtol_init), etaf(etaf), etag(etag) {};
 };
 
