@@ -21,17 +21,17 @@ int main(){
     Vec x1 = x, x2 = x, x3 = x;
     printf("type & cont. & iters & cputime & fval & optimality & flag \\\\\n");
     
-    // Armijo + continuation
+    // Armijo
     opts.setArmijo(0.1);
     x1 = pgm(p, x1, opts, out);
     printf("Armijo & 1 & %d & %g & %g & %g & %d \\\\\n", out.iter, out.cputime, out.F_cur, out.nrmG, out.Flag);
 
-    // Nonmonotone + continuation
+    // Nonmonotone
     opts.setNonmonotone(0.1, 10);
     x2 = pgm(p, x2, opts, out);
     printf("Nonmonotone & 1 & %d & %g & %g & %g & %d \\\\\n", out.iter, out.cputime, out.F_cur, out.nrmG, out.Flag);
 
-    // Classical + continuation
+    // Classical
     opts.setClassical();
     x3 = pgm(p, x3, opts, out);
     printf("Classical & 1 & %d & %g & %g & %g & %d \\\\\n", out.iter, out.cputime, out.F_cur, out.nrmG, out.Flag);
