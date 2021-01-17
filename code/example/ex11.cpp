@@ -4,8 +4,6 @@
 #include "jlpg.hpp"
 using namespace Eigen;
 using namespace std;
-
-// load_csv function refers from https://stackoverflow.com/questions/34247057/how-to-read-csv-file-and-assign-to-eigen-matrix
 template<typename M>
 M load_csv (const std::string & path) {
     std::ifstream indata;
@@ -33,7 +31,7 @@ Real masked_Frob(Mat X, Mat A){
             if(A(i,j)>20) res+=(X(i,j)-A(i,j))*(X(i,j)-A(i,j));
         }
     }
-    return res*5e-3;
+    return res*0.5;
 }
 Mat masked_Frob_grad(Mat X, Mat A){
     int Arow = A.rows(), Acol = A.cols();
@@ -43,20 +41,20 @@ Mat masked_Frob_grad(Mat X, Mat A){
             if(A(i,j)>20) U(i,j) = X(i,j) - A(i,j);
         }
     }
-    return U*1e-2;
+    return U;
 }
 int main(){
     clock_t  Tstart, Tend;
 	Tstart = clock();
-    Mat A = load_csv<Mat>("../../jester-data-1.csv");
+    Mat A = load_csv<Mat>("../../jester-data-tiny.csv");
     Tend = clock();
 	Real during = (double)(Tend - Tstart)/CLOCKS_PER_SEC;
     cout << "time elasped: " << during << endl;
     cout << "Recommedation of JESTER dataset" << endl;
     grad_pair<Mat> mc(bind(masked_Frob, placeholders::_1, A), bind(masked_Frob_grad, placeholders::_1, A));
     Problem<Mat> p(mc, NUCLEAR_NORM);
-    p.mu = 10; 
-    Options opts(10000, 10, 10, 1e-0, 5e-1);
+    p.mu = 0.01; 
+    Options opts(10000, 1, 1, 1e-0, 5e-1);
     opts.setClassical();
     ContOptions con_opts(opts, 10, 0.1, 100, 1e2, 1e2, 1e-1, 1e-1);
 
