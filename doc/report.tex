@@ -57,6 +57,30 @@ bottom=2.5cm]{geometry}
 
 %\graphicspath{{../figures/}}
 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{magenta},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
 
 
 %--------------------------------------------------------------------%
@@ -90,9 +114,58 @@ bottom=2.5cm]{geometry}
   \end{equation}
   where $t_k$ is a chosen step size.
   
-  Our contributions are listed as follows:
+  In this project, we implement a general software package for the 
+  proximal gradient method. Our software package has the following 
+  features:
   \begin{itemize}
-    \item 
+    \item Support the following objective functions:
+    \begin{itemize}
+      \item Least Square(both vector and matrix version): 
+      \co{LS(A,b)}.
+      \item Logistic regression: \co{LOGISTIC(A,b)}.
+      \item We allow user-specified objective functions.
+    \end{itemize}
+  
+    \item Support the following proximal pairs (See \cref{sec:cal} 
+    for details):
+    \begin{itemize}
+      \item Vector form: \co{L1\_NORM, L2\_NORM, Linf\_NORM and 
+      L0\_NORM
+        L1\_BALL(R), L2\_NORM(R), Linf\_NORM(R)} and \co{L0\_NORM(R)}
+      \item Matrix norm in generalized LASSO problem, currently 
+      including \co{L12\_NORM} only.
+      \item Spectral-relevant norm, currently including 
+      \co{NUCLEAR\_NORM} only.
+      \item \co{ELASTIC\_NET(lam)} and \co{LOG\_SUM}.
+      \item Naive gradient method, use \co{NO\_PROX} or 
+      \co{NO\_PROX\_MAT}.
+      \item We allow user-specified proximal operators. In this way, 
+      our software package supports the proximal operators in which 
+      $x$ is divided into several blocks.
+    \end{itemize}
+    \item Support four kinds of optimization strategies to choose the 
+    step size  (See \cref{sec:alg} for details):
+    \begin{itemize}
+      \item Constant: constant step size.
+      \item Armijo: backtracking line search to achieve the Armijo 
+      condition.
+      \item Nonmonotone: backtracking line search to achieve a 
+      non-monotone 
+      condition using the BB step size.
+      \item Classical: a classical strategy to choose the step size 
+      in the 
+      proximal gradient method (See the document for details).
+    \end{itemize}
+    \item Easy construction of new \co{grad\_pair} and 
+    \co{prox\_pair}.
+    \item Support a continuation strategy (See \cref{sec:alg} for 
+    details).
+  \end{itemize}
+  Our other contributions include:
+  \begin{itemize}
+    \item We calculate the gradients for least 
+    square and logistic regression. We also calculate several 
+    proximal operators.
   \end{itemize}
 
   The rest of this report is organized as follows. In \cref{sec:alg}, 
@@ -148,7 +221,7 @@ bottom=2.5cm]{geometry}
   Later, we may use the continuation strategy.
   The basic scheme of this strategy is presented in Algorithm 
   \ref{alg:cont}. This strategy may improve efficiency for some 
-  particular types of $h(x)$.
+  particular types of $h(x)$ if $h(x)$ is not an indicator function.
   \begin{algorithm}[h]
     \caption{Continuation strategy.}
     \label{alg:cont}
@@ -164,6 +237,8 @@ bottom=2.5cm]{geometry}
       $t \leftarrow t + 1$.
     }
   \end{algorithm}
+  
+%  \subsection{Theoretical analysis}
   
   
   
@@ -376,6 +451,10 @@ bottom=2.5cm]{geometry}
         n.
       \end{cases}
     \end{displaymath}
+  
+    \item {Indicator of $\ell_1$ ball:} We refer to the algorithm of 
+    \cite{l1ball} to implement the projection onto $\ell_1$ ball. 
+  Here we omit the details. 
     
     \item {Indicator of $\ell_2$-ball:} $h(x) = 
     \mi_{ B_{\norm{\cdot}_2}(R)}$, where $x, y \in \mr^n$.
@@ -424,21 +503,68 @@ bottom=2.5cm]{geometry}
   
   \section{Numerical experiments}
   \label{sec:num}
+  In this section, we conduct several numerical experiments to reveal 
+  the power of our package. 
+  
+  \subsection{Basic setup}
+  We compare between all the three line 
+  search rules given in \cref{sec:alg}. We use \co{cont.} to denote 
+  whether the continuation strategy is used. For each numerical 
+  experiments, we record
+  \begin{itemize}
+    \item \co{iters}: the number of total iterations;
+    \item \co{cputime}: total run time;
+    \item \co{fval}: the function value at the found optimal point;
+    \item \co{optimality}: the optimality measure at the point $x$ is 
+    defined by 
+    \begin{displaymath}
+      \text{\co{optimality}} = \norm{x - \prox_{\mu h}\left( x - 
+      \nabla 
+      f(x) \right)}.
+    \end{displaymath}
+    \item \co{flag}: the flag is $1$ if the termination criteria are
+    satisfied, or is $0$ if not.
+  \end{itemize}
+  The solver terminates if one of the following termination criteria 
+  is satisfied:
+  \begin{itemize}
+    \item the change in the function value: $|F(x^{k+1} - F(x^k))| 
+    \le \text{\co{ftol}}$;
+    \item the optimality measure: $\text{\co{optimality}} \le 
+    \text{\co{gtol}}$.
+  \end{itemize}
+  Here \co{ftol} and \co{gtol} are given beforehand. We also 
+  terminates the optimization process if the number of iterations 
+  exceed a given limit.
+  
+  \subsection{Several examples}
+  We conduct the following numerical experiments for different types 
+  of $f(x)$ and $h(x)$.
+  \begin{enumerate}
+    \item LASSO problem: \co{LS} and \co{L1\_NORM};
+    \item group LASSO problem: \co{LS} and \co{L12\_NORM};
+    \item log-barrier problem: \co{LS} and \co{SUM\_LOG};
+    \item logistic regression with sparsity: \co{LOGISTIC} and 
+    \co{L1\_NORM};
+    \item blocked norm ball constraint LS: \co{LS} and \co{my\_prox} 
+    defined by combining \co{L2\_BALL} block and \co{Linf\_BALL} 
+    block;
+    \item simple box constrainted optimization: \co{my\_grad} 
+    specified by users, and \co{BOX};
+    \item nuclear norm: \co{LS} and \co{NUCLEAR\_NORM};
+    \item least square in $\ell_1$ ball: \co{LS} and \co{L1\_BALL};
+    \item least square in $\ell_\infty$ ball: \co{LS} and 
+    \co{Linf\_BALL};
+    \item read data from Online Joke Recommender System.\footnote{The 
+    \co{load\_csv} function refers from 
+      \url{https://stackoverflow.com/questions/34247057/how-to-read-csv-file-and-assign-to-eigen-matrix}.}
+  \end{enumerate}
+  The numerical results are given in 
+  \cref{tab1,tab2,tab3,tab4,tab5,tab6,tab7,tab8,tab9,tab10}.
   
   
   
   
-  \begin{example}\label{exp1}
-    In this numerical example, we test the classical LASSO problem.
-    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
-    \co{L1\_NORM}, respectively. Let the elements of $A \in \mr^{m 
-    \times n}$ and $u \in \mr^n$ be uniformly random numbers from 
-    $[0,1]$. Let $b = Au$. We take $m = 256$ and $n = 512$. The 
-    initial value is $x^0 = 0$. Let $\mu = 0.01$. We use continuation 
-    strategy and compare between three 
-    types of line search methods. The numerical results are presented 
-    in \cref{tab1}.
-  \end{example}
   
   \begin{table}[p]
     \centering
@@ -451,21 +577,10 @@ bottom=2.5cm]{geometry}
       Classical & 1 & 109 & 0.046875 & 0.223573 & 3.50546e-05 & 1 \\
       \hline
     \end{tabular}
-    \caption{Numerical results for \cref{exp1}.}
+    \caption{Numerical results for Example 1.}
     \label{tab1}
   \end{table}
 
-  \begin{example}\label{exp2}
-    In this numerical example, we test the group LASSO problem.
-    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
-    \co{L12\_NORM}, respectively. Let the elements of $A \in \mr^{m 
-    \times n}$ and $u \in \mr^{n \times l}$ be uniformly random 
-    numbers from $[0,1]$. Let $b = Au$. We take $m = 128$, $n = 256$ 
-    and $l = 2$. The initial value is $x^0 = 0$. Let $\mu = 0.01$. We 
-    use continuation strategy and compare between three 
-    types of line search methods. The numerical results are presented 
-    in \cref{tab2}.
-  \end{example}
   
   \begin{table}[p]
     \centering
@@ -478,11 +593,11 @@ bottom=2.5cm]{geometry}
       Classical & 1 & 334 & 0.28125 & 0.173687 & 5.51511e-05 & 1 \\
       \hline
     \end{tabular}
-    \caption{Numerical results for \cref{exp2}.}
+    \caption{Numerical results for Example 2.}
     \label{tab2}
   \end{table}
 
-  \begin{example}\label{exp3}
+  
 %    In this numerical example, we test the group LASSO problem.
 %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
 %    \co{L12\_NORM}, respectively. Let the elements of $A \in \mr^{m 
@@ -494,7 +609,7 @@ bottom=2.5cm]{geometry}
 %    types of line search methods. The numerical results are 
 %presented 
 %    in \cref{tab3}.
-  \end{example}
+  
   
   \begin{table}[p]
     \centering
@@ -507,11 +622,11 @@ bottom=2.5cm]{geometry}
       Classical & 1 & 54 & 0 & 4.86934 & 0.000220955 & 1 \\
       \hline
     \end{tabular}
-    \caption{Numerical results for \cref{exp3}.}
+    \caption{Numerical results for Example 3.}
     \label{tab3}
   \end{table}
 
-\begin{example}\label{exp4}
+
   %    In this numerical example, we test the group LASSO problem.
   %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
   %    \co{L12\_NORM}, respectively. Let the elements of $A \in 
@@ -525,7 +640,7 @@ bottom=2.5cm]{geometry}
   %    types of line search methods. The numerical results are 
   %presented 
   %    in \cref{tab3}.
-\end{example}
+
 
 \begin{table}[p]
   \centering
@@ -538,11 +653,11 @@ bottom=2.5cm]{geometry}
     Classical & 1 & 792 & 0 & 0.0253074 & 3.99053e-06 & 1 \\
     \hline
   \end{tabular}
-  \caption{Numerical results for \cref{exp4}.}
+  \caption{Numerical results for Example 4.}
   \label{tab4}
 \end{table}
 
-\begin{example}\label{exp5}
+
   %    In this numerical example, we test the group LASSO problem.
   %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} and 
   %    \co{L12\_NORM}, respectively. Let the elements of $A \in 
@@ -556,7 +671,7 @@ bottom=2.5cm]{geometry}
   %    types of line search methods. The numerical results are 
   %presented 
   %    in \cref{tab3}.
-\end{example}
+
 
 \begin{table}[p]
   \centering
@@ -569,64 +684,12 @@ bottom=2.5cm]{geometry}
     Classical & 1 & 81 & 0 & 0.0523896 & 0.000307073 & 1 \\
     \hline
   \end{tabular}
-  \caption{Numerical results for \cref{exp5}.}
+  \caption{Numerical results for Example 5.}
   \label{tab5}
 \end{table}
   
   
-  \begin{example}\label{exp5}
-    %    In this numerical example, we test the group LASSO problem.
-    %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} 
-    %and 
-    %    \co{L12\_NORM}, respectively. Let the elements of $A \in 
-    %\mr^{m 
-    %      \times n}$ and $u \in \mr^{n \times l}$ be uniformly 
-    %random 
-    %    numbers from $[0,1]$. Let $b = Au$. We take $m = 128$, $n = 
-    %256$ 
-    %    and $l = 2$. The initial value is $x^0 = 0$. Let $\mu = 
-    %0.01$. 
-    %We 
-    %    use continuation strategy and compare between three 
-    %    types of line search methods. The numerical results are 
-    %presented 
-    %    in \cref{tab3}.
-  \end{example}
-  
-  \begin{table}[p]
-    \centering
-    \begin{tabular}{cc|ccccc}
-      \hline
-      type & cont. & iters & cputime & 
-      fval & optimality & flag \\ \hline
-      Armijo & 1 & 66 & 0 & 0.0523895 & 0.000105485 & 1 \\
-      Nonmonotone & 1 & 68 & 0 & 0.0523895 & 0.000147343 & 1 \\
-      Classical & 1 & 81 & 0 & 0.0523896 & 0.000307073 & 1 \\
-      \hline
-    \end{tabular}
-    \caption{Numerical results for \cref{exp5}.}
-    \label{tab5}
-  \end{table}
-  
-  
-  \begin{example}\label{exp6}
-    %    In this numerical example, we test the group LASSO problem.
-    %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} 
-    %and 
-    %    \co{L12\_NORM}, respectively. Let the elements of $A \in 
-    %\mr^{m 
-    %      \times n}$ and $u \in \mr^{n \times l}$ be uniformly 
-    %random 
-    %    numbers from $[0,1]$. Let $b = Au$. We take $m = 128$, $n = 
-    %256$ 
-    %    and $l = 2$. The initial value is $x^0 = 0$. Let $\mu = 
-    %0.01$. 
-    %We 
-    %    use continuation strategy and compare between three 
-    %    types of line search methods. The numerical results are 
-    %presented 
-    %    in \cref{tab3}.
-  \end{example}
+
   
   \begin{table}[p]
     \centering
@@ -639,11 +702,11 @@ bottom=2.5cm]{geometry}
       Classical & 1 & 10 & 0 & 1.88988 & 2.67976e-09 & 1 \\
       \hline
     \end{tabular}
-    \caption{Numerical results for \cref{exp6}.}
+    \caption{Numerical results for Example 6.}
     \label{tab6}
   \end{table}
 
-\begin{example}\label{exp7}
+
   %    In this numerical example, we test the group LASSO problem.
   %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} 
   %and 
@@ -660,7 +723,7 @@ bottom=2.5cm]{geometry}
   %    types of line search methods. The numerical results are 
   %presented 
   %    in \cref{tab3}.
-\end{example}
+
 
 \begin{table}[p]
   \centering
@@ -673,13 +736,13 @@ bottom=2.5cm]{geometry}
     Classical & 1 & 191 & 0.96875 & 815.136 & 0.000632897 & 1 \\
     \hline
   \end{tabular}
-  \caption{Numerical results for \cref{exp7}.}
+  \caption{Numerical results for Example 7.}
   \label{tab7}
 \end{table}
   
   
   
-  \begin{example}\label{exp8}
+  
     %    In this numerical example, we test the group LASSO problem.
     %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} 
     %and 
@@ -696,7 +759,7 @@ bottom=2.5cm]{geometry}
     %    types of line search methods. The numerical results are 
     %presented 
     %    in \cref{tab3}.
-  \end{example}
+  
   
   \begin{table}[p]
     \centering
@@ -704,16 +767,16 @@ bottom=2.5cm]{geometry}
       \hline
       type & cont. & iters & cputime & 
       fval & optimality & flag \\ \hline
-      Armijo & 1 & 14 & 0 & 2016.87 & 1.01978e-05 & 1 \\
-      Nonmonotone & 1 & 14 & 0 & 2016.87 & 1.01978e-05 & 1 \\
-      Classical & 1 & 14 & 0 & 2016.87 & 1.01978e-05 & 1 \\
+      Armijo & 0 & 14 & 0 & 2016.87 & 1.01978e-05 & 1 \\
+      Nonmonotone & 0 & 14 & 0 & 2016.87 & 1.01978e-05 & 1 \\
+      Classical & 0 & 14 & 0 & 2016.87 & 1.01978e-05 & 1 \\
       \hline
     \end{tabular}
-    \caption{Numerical results for \cref{exp8}.}
+    \caption{Numerical results for Example 8.}
     \label{tab8}
   \end{table}
 
-\begin{example}\label{exp9}
+
   %    In this numerical example, we test the group LASSO problem.
   %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} 
   %and 
@@ -730,7 +793,7 @@ bottom=2.5cm]{geometry}
   %    types of line search methods. The numerical results are 
   %presented 
   %    in \cref{tab3}.
-\end{example}
+
 
 \begin{table}[p]
   \centering
@@ -738,13 +801,47 @@ bottom=2.5cm]{geometry}
     \hline
     type & cont. & iters & cputime & 
     fval & optimality & flag \\ \hline
-    Armijo & 1 & 42 & 0 & 0.00905712 & 0.00505199 & 1 \\
-    Nonmonotone & 1 & 77 & 0 & 0.00849407 & 0.00280368 & 1 \\
-    Classical & 1 & 102 & 0 & 0.00845289 & 9.38481e-05 & 1 \\
+    Armijo & 0 & 42 & 0 & 0.00905712 & 0.00505199 & 1 \\
+    Nonmonotone & 0 & 77 & 0 & 0.00849407 & 0.00280368 & 1 \\
+    Classical & 0 & 102 & 0 & 0.00845289 & 9.38481e-05 & 1 \\
     \hline
   \end{tabular}
-  \caption{Numerical results for \cref{exp9}.}
+  \caption{Numerical results for Example 9.}
   \label{tab9}
+\end{table}
+
+
+  %    In this numerical example, we test the group LASSO problem.
+  %    In other words, the types of $f(x)$ and $h(x)$ are \co{LS} 
+  %and 
+  %    \co{L12\_NORM}, respectively. Let the elements of $A \in 
+  %\mr^{m 
+  %      \times n}$ and $u \in \mr^{n \times l}$ be uniformly 
+  %random 
+  %    numbers from $[0,1]$. Let $b = Au$. We take $m = 128$, $n = 
+  %256$ 
+  %    and $l = 2$. The initial value is $x^0 = 0$. Let $\mu = 
+  %0.01$. 
+  %We 
+  %    use continuation strategy and compare between three 
+  %    types of line search methods. The numerical results are 
+  %presented 
+  %    in \cref{tab3}.
+
+
+\begin{table}[p]
+  \centering
+  \begin{tabular}{cc|ccccc}
+    \hline
+    type & cont. & iters & cputime & 
+    fval & optimality & flag \\ \hline
+    Armijo & 1 & 13 & 61.3945 & 1.19394e+06 & 7.46187 & 1 \\
+    Nonmonotone & 1 & 52 & 101.36 & 1.13583e+06 & 0.0960994 & 1 \\
+    Classical & 1 & 69 & 128.949 & 1.13583e+06 & 0.0866642 & 1 \\
+    \hline
+  \end{tabular}
+  \caption{Numerical results for Example 10.}
+  \label{tab10}
 \end{table}
   
   
@@ -759,5 +856,106 @@ bottom=2.5cm]{geometry}
   
   \section{Design of the packages}
   \label{app:design}
+  
+  \subsection{Structure of our package}
+  The structure of the folder \co{code/} is listed as follows:
+  \begin{itemize}
+    \item \co{include/} contains header file of our jlpg package, 
+    including 
+    \begin{itemize}
+      \item \co{jlpg.hpp} the wrapper of our all header file.
+      \item \co{funcpairs.hpp} define useful function pairs like 
+      \co{LS}, \co{L1\_NORM}, \co{L2\_NORM}.
+      \item \co{problem.hpp}: the construction and basic function of 
+      the objective.
+      \item \co{solver.hpp} the solver of our proximal gradient 
+      method.
+      \item \co{continuation.hpp} provides an interface to use 
+      continuation method accelerating our program for those $h(x)$ 
+      that are not indicator functions.
+    \end{itemize}
+    
+    \item \co{example/} contains some examples we create in order to 
+    reveal the power of our package. For example, 
+    \begin{itemize}
+      \item \co{ex1.cpp}: the lasso problem of size $256 \times 512$.
+      \item \co{ex2.cpp}: the group lasso problem.
+      \item $\ldots$
+    \end{itemize}
+  
+    \item Inside \co{code/} dictionary, there is also a README file, 
+    introducing the basic framework of our package and some advanced 
+    parameters or settings.
+  \end{itemize}
+
+  \subsection{Dependency}
+  \begin{itemize}
+    \item Need C++11 support, G++(>=5.0) is recommended. It is 
+    welcome to inform us that the performance under other compile 
+    environments.
+    \item Eigen(>=3.0) is required.
+  \end{itemize}
+
+  \subsection{An illustrative example}
+  The steps to use our package are given by an illustrative example 
+  as follows.
+  \begin{enumerate}
+    \item Include the necessary files.
+    \begin{lstlisting}[language=C++,style=mystyle]
+      #include <iostream>  
+      // for IO
+      #include <eigen3/Eigen/Dense> 
+      // for using eigen
+      #include "jlpg.hpp"
+      // our package, change to the right file
+      using namespace std;
+    \end{lstlisting}
+  
+    \item Create Data for $A$ and $b$.
+    \begin{lstlisting}[language=C++,style=mystyle]
+      Mat A(3,3); // Mat is MatrixXd in eigen.
+      A << 1,2,3,4,5,6,7,8,9; // Assign value
+      Vec b(3);  // Vec is VectorXd in eigen
+      b << 1,4,9; // Assign Value
+    \end{lstlisting}
+  
+    \item Set up the problem:
+    \begin{displaymath}
+      \min\limits_{x} \frac{1}{2} \norm{Ax - b}_2^2 + 0.01 \norm{x}_1
+    \end{displaymath}
+    \begin{lstlisting}[language=C++,style=mystyle]
+      // set up the problem with LeastSqaure and L1 norm.
+      Problem<Vec> p(LS(A,b),L1_NORM) 
+      // set up the coefficient of problem
+      p.mu = 0.01; 
+    \end{lstlisting}
+  
+    \item Set up options for solver.
+    \begin{lstlisting}[language=C++,style=mystyle]
+      // Create the option
+      Options opts(10000, 1e-8, 1e-6, 1e-0, 5e-1); 
+      // set strategy for the option: classical
+      opts.setClassical(); 
+    \end{lstlisting}
+    
+    \item Solve it happily.
+    \begin{lstlisting}[language=C++,style=mystyle]
+      Outputs out; //output structure
+      Vec x(3); x << 0,0,0; //init value
+      x = pgm(p,x,opts,out);
+      cout << x << endl;
+    \end{lstlisting}
+  
+    \item Suitable compile command: \\\co{g++ -O3 -march=native 
+    -std=c++11 naivelasso -o naivelasso.out -I../include -DVERBOSED=1 
+    }
+  \end{enumerate}
+  
+  \begin{thebibliography}{1}
+    \bibitem{l1ball} Condat, Laurent. "Fast projection onto the 
+    simplex 
+    and the $\pmb {l} _\mathbf {1} $ ball." Mathematical Programming 
+    158.1-2 (2016): 575-585.
+  \end{thebibliography}
   
 \end{document}
